@@ -46,10 +46,14 @@ h1{font:800 40px/1 Archivo,sans-serif;margin:8px 0 0;letter-spacing:-.01em}
 h2{font:700 20px/1.2 Archivo,sans-serif;margin:0 0 12px}
 .talk{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .talk p{margin:0 0 12px;color:var(--muted)}
-#status{font-size:13px;color:var(--muted);margin-top:10px;min-height:1.2em}
-#tapBtn{display:none;width:100%;border:0;border-radius:12px;padding:16px;background:var(--accent);color:var(--accent-ink);font:700 17px/1 Archivo,sans-serif;cursor:pointer}
-#tapBtn.show{display:block}
-elevenlabs-convai{display:block}
+#status{font-size:14px;color:var(--muted);margin-top:10px;min-height:1.3em}
+#tapBtn{display:block;width:100%;border:0;border-radius:12px;padding:18px;background:var(--accent);color:var(--accent-ink);font:700 18px/1 Archivo,sans-serif;cursor:pointer}
+#tapBtn[disabled]{opacity:.6}
+#tapBtn.live{background:#b3261e;color:#fff}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--muted);margin-right:6px;vertical-align:middle}
+.dot.speaking{background:var(--accent);animation:pulse 1s infinite}
+.dot.listening{background:#2e7d32}
+@keyframes pulse{50%{opacity:.35}}
 .cards{display:grid;gap:10px}
 .card{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--ink);background:var(--card);min-height:64px}
 .card:active{background:var(--soft)}
@@ -98,8 +102,7 @@ footer a{color:inherit}
     <h2 id="talkH">Talk with Ashley</h2>
     <p>Ashley knows this Wheeler inside and out. Ask her anything while you look around.</p>
     <button id="tapBtn" type="button">🎙 Tap to talk to Ashley</button>
-    <div id="status" aria-live="polite">Connecting to Ashley…</div>
-    <elevenlabs-convai agent-id="agent_9501m3abk5adf7dvv1r2v65czfhc"></elevenlabs-convai>
+    <div id="status" aria-live="polite"></div>
   </section>
 
   <section class="pad">
@@ -215,40 +218,72 @@ footer a{color:inherit}
   </footer>
 </main>
 
-<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+<script src="elevenlabs-client.js"></script>
 <script>
 (function(){
-  var started = false;
+  var AGENT_ID = 'agent_9501m3abk5adf7dvv1r2v65czfhc';
   var btn = document.getElementById('tapBtn');
   var status = document.getElementById('status');
-  function showButton(msg){
-    if (started) return;
-    btn.classList.add('show');
-    status.textContent = msg || 'Tap the button to start talking with Ashley.';
+  var convo = null, starting = false;
+
+  function setStatus(html){ status.innerHTML = html; }
+  function idle(msg){
+    convo = null; starting = false;
+    btn.disabled = false; btn.classList.remove('live');
+    btn.textContent = '🎙 Tap to talk to Ashley';
+    setStatus(msg || '');
   }
-  function start(){
-    var w = document.querySelector('elevenlabs-convai');
-    if (!w || typeof w.startConversation !== 'function') { showButton(); return Promise.reject(); }
-    return Promise.resolve(w.startConversation()).then(function(){
-      started = true;
-      btn.classList.remove('show');
-      status.textContent = 'Ashley is on — go ahead and talk.';
-    });
+
+  async function start(fromTap){
+    if (convo || starting) return;
+    starting = true;
+    btn.disabled = true; btn.textContent = 'Connecting…';
+    setStatus('<span class="dot"></span>Connecting to Ashley…');
+    try {
+      // Ask for the mic explicitly so the permission prompt appears right away
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+      convo = await ElevenLabsClient.Conversation.startSession({
+        agentId: AGENT_ID,
+        connectionType: 'websocket',
+        onConnect: function(){
+          starting = false;
+          btn.disabled = false; btn.classList.add('live');
+          btn.textContent = 'End conversation';
+          setStatus('<span class="dot listening"></span>Ashley is on. Go ahead and talk.');
+        },
+        onModeChange: function(m){
+          if (!convo) return;
+          setStatus(m.mode === 'speaking'
+            ? '<span class="dot speaking"></span>Ashley is talking…'
+            : '<span class="dot listening"></span>Listening…');
+        },
+        onDisconnect: function(){ idle('Conversation ended. Tap to talk again anytime.'); },
+        onError: function(e){ console.error(e); }
+      });
+    } catch (e) {
+      console.error(e);
+      var denied = e && (e.name === 'NotAllowedError' || e.name === 'SecurityError');
+      idle(fromTap
+        ? (denied ? 'Ashley needs your microphone. Allow mic access in your browser, then tap again.'
+                  : 'Couldn\u2019t connect. Check your signal and tap again, or call 910-310-0422.')
+        : '');
+    }
   }
-  // Fallback: if autoplay / mic permission fails silently, offer a manual button after 6s
-  var fallback = setTimeout(function(){ showButton(); }, 6000);
-  if (window.customElements) {
-    customElements.whenDefined('elevenlabs-convai').then(function(){
-      start().then(function(){ clearTimeout(fallback); })
-             .catch(function(){ clearTimeout(fallback); showButton(); });
-    });
-  }
+
   btn.addEventListener('click', function(){
-    status.textContent = 'Connecting to Ashley…';
-    start().catch(function(){
-      status.textContent = 'Couldn’t start the voice chat. Allow microphone access, or use the Ashley button in the corner.';
-    });
+    if (convo) { var c = convo; convo = null; c.endSession(); return; }
+    start(true);
   });
+
+  // Browsers block audio until the visitor taps, so only auto-start if the page
+  // already has a user gesture; otherwise the big button is the start.
+  var ua = navigator.userActivation;
+  if (ua && ua.hasBeenActive) {
+    start(false);
+    setTimeout(function(){ if (!convo) idle('Tap the button to start talking with Ashley.'); }, 6000);
+  } else {
+    setStatus('Tap the button and Ashley will walk you through this Wheeler.');
+  }
 })();
 </script>
 </body>
