@@ -85,6 +85,13 @@ footer a{color:inherit}
 .sheet .cancel{width:100%;margin-top:8px;border:0;background:none;color:var(--muted);font:600 14px Inter,sans-serif;padding:10px;cursor:pointer}
 .sheet .alt{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
 .sheet .alt a{color:inherit}
+.tour{position:fixed;inset:0;background:#000;display:none;flex-direction:column;z-index:60}
+.tour.open{display:flex}
+.tour .bar{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:#111;color:#fff;font:600 14px Inter,sans-serif}
+.tour .bar button{border:0;border-radius:999px;background:#fff;color:#111;font:700 14px Inter,sans-serif;padding:9px 16px;cursor:pointer}
+.tour iframe{flex:1;width:100%;border:0}
+.lenders{margin:4px 0 6px;padding:12px;border-radius:10px;background:var(--soft);font-size:14px;color:var(--ink)}
+.lenders li{margin:3px 0}
 </style>
 </head>
 <body>
@@ -119,11 +126,11 @@ footer a{color:inherit}
 
   <section class="pad">
     <div class="cards">
-      <a class="card" href="https://my.matterport.com/show/?m=bmcy4FjRjtj" target="_blank" rel="noopener">
+      <a class="card" href="#tour" id="tourCard">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg></span>
         <span><b>Walk through in 3D</b><span>Matterport virtual tour</span></span><span class="arrow">›</span>
       </a>
-      <a class="card" href="https://www.carolinacustompm.com/financing" target="_blank" rel="noopener">
+      <a class="card" href="#financing" id="finCard">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg></span>
         <span><b>Explore financing</b><span>21st Mortgage &amp; First Flight FCU</span></span><span class="arrow">›</span>
       </a>
@@ -230,6 +237,34 @@ footer a{color:inherit}
   </footer>
 </main>
 
+<div class="tour" id="tour" role="dialog" aria-modal="true" aria-label="3D tour">
+  <div class="bar"><span>Wheeler 3D tour · Ashley's still listening</span><button type="button" id="tourClose">Done</button></div>
+  <iframe id="tourFrame" title="Wheeler 3D tour" allow="fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
+</div>
+
+<div class="sheet" id="fin" role="dialog" aria-modal="true" aria-labelledby="finH">
+  <form id="finForm">
+    <h3 id="finH">Financing on the Wheeler</h3>
+    <p class="sub">Melanie handles financing personally and will reach out with real numbers.</p>
+    <ul class="lenders">
+      <li><b>21st Mortgage Corporation</b></li>
+      <li><b>First Flight Federal Credit Union</b></li>
+      <li>Primary home, vacation place, or rental all OK</li>
+    </ul>
+    <label for="fName">Your name</label>
+    <input id="fName" name="name" autocomplete="name" required>
+    <label for="fPhone">Mobile number</label>
+    <input id="fPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
+    <label for="fWhen">Best time to reach you</label>
+    <select id="fWhen" name="when">
+      <option>Anytime</option><option>Morning</option><option>Afternoon</option><option>Evening</option>
+    </select>
+    <button class="go" type="submit" id="fGo">Have Melanie reach out</button>
+    <button class="cancel" type="button" id="fCancel">Not now</button>
+    <p class="alt">Prefer the full credit application? <a href="https://www.carolinacustompm.com/financing" target="_blank" rel="noopener">Open it here</a> (opens a new tab)</p>
+  </form>
+</div>
+
 <div class="sheet" id="sched" role="dialog" aria-modal="true" aria-labelledby="schedH">
   <form id="schedForm">
     <h3 id="schedH">Schedule a lot visit</h3>
@@ -295,6 +330,8 @@ footer a{color:inherit}
         onDisconnect: function(){ idle('Conversation ended. Tap to talk again anytime.'); },
         onError: function(e){ console.error(e); },
         clientTools: {
+          open_tour: function(){ openTour(); return '3D tour is open on their screen.'; },
+          open_financing: function(p){ openFin(p && p.name, p && p.phone); return 'Financing form is open on their screen.'; },
           open_scheduler: function(p){
             openSched(p && p.name, p && p.phone);
             return 'Scheduler is open on their screen.';
@@ -311,8 +348,51 @@ footer a{color:inherit}
     }
   }
 
-  // ---- Lot visit scheduler ----
   var HOOK = 'https://hook.us2.make.com/xo43yjxa95d1974lf06nlawn4p7ef4qb';
+
+  // ---- 3D tour overlay (stays on page so Ashley keeps talking) ----
+  var tour = document.getElementById('tour'), tourFrame = document.getElementById('tourFrame');
+  function openTour(){
+    if (!tourFrame.src) tourFrame.src = 'https://my.matterport.com/show/?m=bmcy4FjRjtj&play=1&qs=1';
+    tour.classList.add('open');
+  }
+  document.getElementById('tourCard').addEventListener('click', function(e){ e.preventDefault(); openTour(); });
+  document.getElementById('tourClose').addEventListener('click', function(){ tour.classList.remove('open'); });
+
+  function tell(text){ try { if (convo && convo.sendContextualUpdate) convo.sendContextualUpdate(text); } catch(e){} }
+
+  // ---- Financing sheet ----
+  var finSheet = document.getElementById('fin'), finForm = document.getElementById('finForm');
+  function openFin(name, phone){
+    if (name) document.getElementById('fName').value = name;
+    if (phone) document.getElementById('fPhone').value = phone;
+    finForm.querySelector('.sub').textContent = 'Melanie handles financing personally and will reach out with real numbers.';
+    var g = document.getElementById('fGo'); g.disabled = false; g.textContent = 'Have Melanie reach out';
+    finSheet.classList.add('open');
+  }
+  function closeFin(){ finSheet.classList.remove('open'); }
+  document.getElementById('finCard').addEventListener('click', function(e){ e.preventDefault(); openFin(); });
+  document.getElementById('fCancel').addEventListener('click', closeFin);
+  finSheet.addEventListener('click', function(e){ if (e.target === finSheet) closeFin(); });
+  finForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var f = new FormData(finForm);
+    var msg = 'Wheeler #10038 FINANCING request: ' + f.get('name') + ', ' + f.get('phone') + '. Best time: ' + f.get('when') + '.';
+    var go = document.getElementById('fGo'); go.disabled = true; go.textContent = 'Sending…';
+    fetch(HOOK, { method:'POST', mode:'no-cors', body: new URLSearchParams({ message: msg }) })
+      .then(function(){
+        go.textContent = 'Sent ✓';
+        finForm.querySelector('.sub').textContent = 'Got it! Melanie will reach out soon.';
+        tell('The customer just asked for Melanie to reach out about financing. The team has been notified.');
+        setTimeout(closeFin, 2200);
+      })
+      .catch(function(){
+        go.disabled = false; go.textContent = 'Try again';
+        finForm.querySelector('.sub').textContent = "That didn't go through. Try again or call 910-310-0422.";
+      });
+  });
+
+  // ---- Lot visit scheduler ----
   var sheet = document.getElementById('sched'), form = document.getElementById('schedForm');
   function openSched(name, phone){
     if (name) document.getElementById('sName').value = name;
@@ -340,7 +420,7 @@ footer a{color:inherit}
       .then(function(){
         go.textContent = 'Request sent ✓';
         form.querySelector('.sub').textContent = "You're all set. The team will reach out to confirm " + day + ".";
-        if (convo && convo.sendContextualUpdate) convo.sendContextualUpdate('The customer just submitted a lot visit request for ' + day + ', ' + f.get('time') + '. The team has been notified.');
+        tell('The customer just submitted a lot visit request for ' + day + ', ' + f.get('time') + '. The team has been notified.');
         setTimeout(closeSched, 2200);
       })
       .catch(function(){
