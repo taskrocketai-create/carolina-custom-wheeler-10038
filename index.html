@@ -73,6 +73,18 @@ details li{margin:3px 0}
 .note{font-size:13px;color:var(--muted);margin:0 0 14px}
 footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted);border-top:1px solid var(--line)}
 footer a{color:inherit}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:50}
+.sheet.open{display:flex}
+.sheet form{background:var(--card);color:var(--ink);width:100%;max-width:500px;border-radius:16px 16px 0 0;padding:20px 18px 28px;max-height:92vh;overflow:auto}
+.sheet h3{font:800 22px/1.2 Archivo,sans-serif;margin:0 0 4px}
+.sheet p.sub{margin:0 0 14px;color:var(--muted);font-size:14px}
+.sheet label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin:12px 0 5px}
+.sheet input,.sheet select{width:100%;font:16px Inter,sans-serif;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.sheet .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sheet .go{width:100%;margin-top:18px;border:0;border-radius:12px;padding:16px;background:var(--accent);color:var(--accent-ink);font:700 17px/1 Archivo,sans-serif;cursor:pointer}
+.sheet .cancel{width:100%;margin-top:8px;border:0;background:none;color:var(--muted);font:600 14px Inter,sans-serif;padding:10px;cursor:pointer}
+.sheet .alt{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
+.sheet .alt a{color:inherit}
 </style>
 </head>
 <body>
@@ -115,9 +127,9 @@ footer a{color:inherit}
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg></span>
         <span><b>Explore financing</b><span>21st Mortgage &amp; First Flight FCU</span></span><span class="arrow">›</span>
       </a>
-      <a class="card" href="tel:9103100422">
+      <a class="card" href="#schedule" id="schedCard">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span>
-        <span><b>Schedule a lot visit</b><span>Call 910-310-0422</span></span><span class="arrow">›</span>
+        <span><b>Schedule a lot visit</b><span>Pick a day and time</span></span><span class="arrow">›</span>
       </a>
     </div>
   </section>
@@ -218,6 +230,29 @@ footer a{color:inherit}
   </footer>
 </main>
 
+<div class="sheet" id="sched" role="dialog" aria-modal="true" aria-labelledby="schedH">
+  <form id="schedForm">
+    <h3 id="schedH">Schedule a lot visit</h3>
+    <p class="sub">Come see the Wheeler in person at 1150 US-70 East, New Bern. We'll text or call to confirm.</p>
+    <label for="sName">Your name</label>
+    <input id="sName" name="name" autocomplete="name" required>
+    <label for="sPhone">Mobile number</label>
+    <input id="sPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
+    <div class="row">
+      <div><label for="sDate">Day</label><input id="sDate" name="date" type="date" required></div>
+      <div><label for="sTime">Time</label>
+        <select id="sTime" name="time" required>
+          <option value="Morning (9-12)">Morning (9-12)</option>
+          <option value="Afternoon (12-3)">Afternoon (12-3)</option>
+          <option value="Late afternoon (3-5)">Late afternoon (3-5)</option>
+        </select></div>
+    </div>
+    <button class="go" type="submit" id="sGo">Request this visit</button>
+    <button class="cancel" type="button" id="sCancel">Not now</button>
+    <p class="alt">Rather talk? <a href="tel:9103100422">Call 910-310-0422</a></p>
+  </form>
+</div>
+
 <script src="elevenlabs-client.js"></script>
 <script>
 (function(){
@@ -258,7 +293,13 @@ footer a{color:inherit}
             : '<span class="dot listening"></span>Listening…');
         },
         onDisconnect: function(){ idle('Conversation ended. Tap to talk again anytime.'); },
-        onError: function(e){ console.error(e); }
+        onError: function(e){ console.error(e); },
+        clientTools: {
+          open_scheduler: function(p){
+            openSched(p && p.name, p && p.phone);
+            return 'Scheduler is open on their screen.';
+          }
+        }
       });
     } catch (e) {
       console.error(e);
@@ -269,6 +310,44 @@ footer a{color:inherit}
         : '');
     }
   }
+
+  // ---- Lot visit scheduler ----
+  var HOOK = 'https://hook.us2.make.com/xo43yjxa95d1974lf06nlawn4p7ef4qb';
+  var sheet = document.getElementById('sched'), form = document.getElementById('schedForm');
+  function openSched(name, phone){
+    if (name) document.getElementById('sName').value = name;
+    if (phone) document.getElementById('sPhone').value = phone;
+    var d = document.getElementById('sDate');
+    var t = new Date(); t.setDate(t.getDate()+1);
+    d.min = new Date().toISOString().slice(0,10);
+    if (!d.value) d.value = t.toISOString().slice(0,10);
+    form.querySelector('.sub').textContent = "Come see the Wheeler in person at 1150 US-70 East, New Bern. We'll text or call to confirm.";
+    document.getElementById('sGo').disabled = false;
+    document.getElementById('sGo').textContent = 'Request this visit';
+    sheet.classList.add('open');
+  }
+  function closeSched(){ sheet.classList.remove('open'); }
+  document.getElementById('schedCard').addEventListener('click', function(e){ e.preventDefault(); openSched(); });
+  document.getElementById('sCancel').addEventListener('click', closeSched);
+  sheet.addEventListener('click', function(e){ if (e.target === sheet) closeSched(); });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var f = new FormData(form);
+    var day = new Date(f.get('date')+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+    var msg = 'Wheeler #10038 LOT VISIT request: ' + f.get('name') + ', ' + f.get('phone') + '. ' + day + ', ' + f.get('time') + '.';
+    var go = document.getElementById('sGo'); go.disabled = true; go.textContent = 'Sending…';
+    fetch(HOOK, { method:'POST', mode:'no-cors', body: new URLSearchParams({ message: msg }) })
+      .then(function(){
+        go.textContent = 'Request sent ✓';
+        form.querySelector('.sub').textContent = "You're all set. The team will reach out to confirm " + day + ".";
+        if (convo && convo.sendContextualUpdate) convo.sendContextualUpdate('The customer just submitted a lot visit request for ' + day + ', ' + f.get('time') + '. The team has been notified.');
+        setTimeout(closeSched, 2200);
+      })
+      .catch(function(){
+        go.disabled = false; go.textContent = 'Try again';
+        form.querySelector('.sub').textContent = "That didn't go through. Try again or call 910-310-0422.";
+      });
+  });
 
   btn.addEventListener('click', function(){
     if (convo) { var c = convo; convo = null; c.endSession(); return; }
