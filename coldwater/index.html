@@ -112,10 +112,8 @@ footer a{color:inherit}
     <div class="titlerow"><h1>Coldwater</h1><span class="stock">by Clayton</span></div>
     <p class="specs">395 sq ft · 12'×45' · Bedroom + Loft · 1 Bath · Sleeps 6</p>
     <div class="price">
-      <div><span class="plabel">As shown</span><span class="pval">$149,900</span></div>
-      <div><span class="plabel">Base model from</span><span class="pval sm">$139,900</span></div>
+      <div><span class="plabel">Price</span><span class="pval">$139,900</span></div>
     </div>
-    <p class="pnote">Sample pricing for demo. Final price depends on options, delivery &amp; setup.</p>
     <p class="fin"><b>Financing available</b> · through 21st Mortgage &amp; First Flight FCU</p>
   </section>
 
@@ -422,7 +420,7 @@ footer a{color:inherit}
       .then(function(){
         go.textContent = 'Request sent ✓';
         form.querySelector('.sub').textContent = "You're all set. The team will reach out to confirm " + day + ".";
-        tell('The customer just submitted a lot visit request for ' + day + ', ' + f.get('time') + '. The team has been notified.');
+        tell('The customer just submitted a showing request for ' + day + ', ' + f.get('time') + '. The team has been notified.');
         setTimeout(closeSched, 2200);
       })
       .catch(function(){
