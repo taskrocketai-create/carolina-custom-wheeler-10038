@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Coldwater at Triple S Marina · Carolina Custom Park Models</title>
+<meta name="description" content="Clayton Coldwater park model on display at Triple S Marina, Atlantic Beach — 395 sq ft, bedroom + loft, sleeps 6. Talk to Ashley, take the 3D tour, and schedule a showing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f2ec; --card:#ffffff; --ink:#18180f; --muted:#62615a; --line:#e3e0d6;
+  --accent:#3f6b4c; --accent-ink:#ffffff; --soft:#eef1ea;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#11130f; --card:#1a1d18; --ink:#f0eee6; --muted:#a3a197; --line:#2c2f28;
+    --accent:#7fb08c; --accent-ink:#0f1a12; --soft:#20261f;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:500px;margin:0 auto;background:var(--card);min-height:100vh}
+img{display:block;width:100%;height:auto}
+.hero{position:relative}
+.hero img{aspect-ratio:420/270;object-fit:cover}
+.badge{position:absolute;top:12px;left:12px;background:rgba(15,16,12,.78);color:#fff;font:600 11px/1 Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:7px 11px;border-radius:999px}
+.thumbs{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin-top:3px}
+.thumbs img{aspect-ratio:3/2;object-fit:cover}
+.pad{padding:20px 18px}
+.eyebrow{font:700 12px/1 Archivo,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font:800 40px/1 Archivo,sans-serif;margin:8px 0 0;letter-spacing:-.01em}
+.stock{font:600 14px/1 Inter,sans-serif;color:var(--muted)}
+.titlerow{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.specs{margin:8px 0 0;color:var(--ink);font-weight:500}
+.price{display:flex;gap:22px;align-items:flex-end;margin:14px 0 0}
+.price div{display:flex;flex-direction:column}
+.plabel{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.pval{font:800 30px/1.1 Archivo,sans-serif}
+.pval.sm{font-size:20px;color:var(--muted)}
+.pnote{margin:6px 0 0;font-size:12px;color:var(--muted)}
+.fin{margin:12px 0 0;padding:10px 12px;background:var(--soft);border-radius:10px;color:var(--muted);font-size:14px}
+.fin b{color:var(--ink);font-weight:600}
+h2{font:700 20px/1.2 Archivo,sans-serif;margin:0 0 12px}
+.talk{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.talk p{margin:0 0 12px;color:var(--muted)}
+#status{font-size:14px;color:var(--muted);margin-top:10px;min-height:1.3em}
+#tapBtn{display:block;width:100%;border:0;border-radius:12px;padding:18px;background:var(--accent);color:var(--accent-ink);font:700 18px/1 Archivo,sans-serif;cursor:pointer}
+#tapBtn[disabled]{opacity:.6}
+#tapBtn.live{background:#b3261e;color:#fff}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--muted);margin-right:6px;vertical-align:middle}
+.dot.speaking{background:var(--accent);animation:pulse 1s infinite}
+.dot.listening{background:#2e7d32}
+@keyframes pulse{50%{opacity:.35}}
+.cards{display:grid;gap:10px}
+.card{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--ink);background:var(--card);min-height:64px}
+.card:active{background:var(--soft)}
+.ico{flex:0 0 40px;height:40px;border-radius:10px;background:var(--soft);display:grid;place-items:center;color:var(--accent)}
+.ico svg{width:22px;height:22px}
+.card b{display:block;font:700 16px/1.25 Archivo,sans-serif}
+.card span{font-size:13px;color:var(--muted)}
+.arrow{margin-left:auto;color:var(--muted)}
+details{border-top:1px solid var(--line)}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;padding:15px 2px;font:700 16px/1.2 Archivo,sans-serif;display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font:500 22px/1 Inter,sans-serif;color:var(--muted)}
+details[open] summary::after{content:"–"}
+details ul{margin:0 0 16px;padding-left:20px;color:var(--ink)}
+details li{margin:3px 0}
+.note{font-size:13px;color:var(--muted);margin:0 0 14px}
+footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted);border-top:1px solid var(--line)}
+footer a{color:inherit}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:50}
+.sheet.open{display:flex}
+.sheet form{background:var(--card);color:var(--ink);width:100%;max-width:500px;border-radius:16px 16px 0 0;padding:20px 18px 28px;max-height:92vh;overflow:auto}
+.sheet h3{font:800 22px/1.2 Archivo,sans-serif;margin:0 0 4px}
+.sheet p.sub{margin:0 0 14px;color:var(--muted);font-size:14px}
+.sheet label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin:12px 0 5px}
+.sheet input,.sheet select{width:100%;font:16px Inter,sans-serif;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.sheet .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sheet .go{width:100%;margin-top:18px;border:0;border-radius:12px;padding:16px;background:var(--accent);color:var(--accent-ink);font:700 17px/1 Archivo,sans-serif;cursor:pointer}
+.sheet .cancel{width:100%;margin-top:8px;border:0;background:none;color:var(--muted);font:600 14px Inter,sans-serif;padding:10px;cursor:pointer}
+.sheet .alt{font-size:13px;color:var(--muted);text-align:center;margin-top:6px}
+.sheet .alt a{color:inherit}
+.tour{position:fixed;inset:0;background:#000;display:none;flex-direction:column;z-index:60}
+.tour.open{display:flex}
+.tour .bar{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:#111;color:#fff;font:600 14px Inter,sans-serif}
+.tour .bar button{border:0;border-radius:999px;background:#fff;color:#111;font:700 14px Inter,sans-serif;padding:9px 16px;cursor:pointer}
+.tour iframe{flex:1;width:100%;border:0}
+.lenders{margin:4px 0 6px;padding:12px;border-radius:10px;background:var(--soft);font-size:14px;color:var(--ink)}
+.lenders li{margin:3px 0}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="hero">
+    <img src="https://static.wixstatic.com/media/2334c7_2d98f23b0d384064ac8afb2c6ab5c2b4~mv2.jpg/v1/fill/w_840,h_540,al_c,q_80/img.jpg" alt="Coldwater park model exterior" width="420" height="270">
+    <span class="badge">On Display · Triple S Marina</span>
+  </div>
+  <div class="thumbs">
+    <img src="https://static.wixstatic.com/media/2334c7_1adece9d65f746a8a8fcefcb7d538a7b~mv2.jpg/v1/fill/w_800,h_534,al_c,q_80/img.jpg" alt="Coldwater kitchen" width="400" height="267" loading="lazy">
+    <img src="https://static.wixstatic.com/media/2334c7_3734606b67d6445ba4e5d0606b319638~mv2.jpg/v1/fill/w_800,h_534,al_c,q_80/img.jpg" alt="Coldwater living room" width="400" height="267" loading="lazy">
+    <img src="https://static.wixstatic.com/media/2334c7_7f904df3e3d34c6b8c28ac861c2063da~mv2.jpg/v1/fill/w_800,h_534,al_c,q_80/img.jpg" alt="Coldwater loft bedroom" width="400" height="267" loading="lazy">
+    <img src="https://static.wixstatic.com/media/2334c7_b4096d632bc84b5ca1dfcaf928adaf17~mv2.jpg/v1/fill/w_800,h_534,al_c,q_80/img.jpg" alt="Coldwater front porch" width="400" height="267" loading="lazy">
+  </div>
+
+  <section class="pad">
+    <div class="eyebrow">Triple S Marina · Atlantic Beach</div>
+    <div class="titlerow"><h1>Coldwater</h1><span class="stock">by Clayton</span></div>
+    <p class="specs">395 sq ft · 12'×45' · Bedroom + Loft · 1 Bath · Sleeps 6</p>
+    <div class="price">
+      <div><span class="plabel">As shown</span><span class="pval">$149,900</span></div>
+      <div><span class="plabel">Base model from</span><span class="pval sm">$139,900</span></div>
+    </div>
+    <p class="pnote">Sample pricing for demo. Final price depends on options, delivery &amp; setup.</p>
+    <p class="fin"><b>Financing available</b> · through 21st Mortgage &amp; First Flight FCU</p>
+  </section>
+
+  <section class="pad talk" aria-labelledby="talkH">
+    <h2 id="talkH">Talk with Ashley</h2>
+    <p>Ashley knows this Coldwater inside and out, mirrored marina floor plan and all. Ask her anything while you look around.</p>
+    <button id="tapBtn" type="button">🎙 Tap to talk to Ashley</button>
+    <div id="status" aria-live="polite"></div>
+  </section>
+
+  <section class="pad">
+    <div class="cards">
+      <a class="card" href="#tour" id="tourCard">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="M3 7l9 5 9-5M12 12v10"/></svg></span>
+        <span><b>Walk through in 3D</b><span>Matterport virtual tour</span></span><span class="arrow">›</span>
+      </a>
+      <a class="card" href="#financing" id="finCard">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg></span>
+        <span><b>Explore financing</b><span>21st Mortgage &amp; First Flight FCU</span></span><span class="arrow">›</span>
+      </a>
+      <a class="card" href="#schedule" id="schedCard">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span>
+        <span><b>Schedule a showing</b><span>See it here at the marina</span></span><span class="arrow">›</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="pad" aria-labelledby="specH">
+    <h2 id="specH">Full spec sheet</h2>
+    <details>
+      <summary>Exterior</summary>
+      <ul>
+        <li>12" steel I-beam frame with full extension outriggers</li>
+        <li>Detachable hitch</li>
+        <li>2x6 floor joists and 2x4 sidewalls (16" on center)</li>
+        <li>23/32" tongue &amp; groove subfloor</li>
+        <li>Composite porch decking with covered porch</li>
+        <li>High-density woven simplex underbelly</li>
+        <li>2x6 rafters (16" O.C.)</li>
+        <li>8/12 roof pitch available with lofts</li>
+        <li>Exterior frost-proof faucet</li>
+        <li>3 tie-down brackets per side</li>
+        <li>Galvalume metal roofing</li>
+        <li>Hardie fiber cement siding</li>
+        <li>Energy-saving 7/16" OSB &amp; house wrap</li>
+        <li>4/4" residential trim</li>
+        <li>36"x80" residential outswing full-view door with blinds</li>
+        <li>Residential eaves with boxed overhangs front and rear</li>
+        <li>Black powder-coated steel porch railing</li>
+      </ul>
+    </details>
+    <details>
+      <summary>Kitchen</summary>
+      <ul>
+        <li>Samsung stainless 30" electric smooth-top range</li>
+        <li>Samsung stainless 30" microwave/vent hood</li>
+        <li>Samsung stainless 18 cu ft French door refrigerator</li>
+        <li>Fire extinguisher included</li>
+        <li>Wood cabinetry with soft-close hardware throughout</li>
+        <li>Designer cabinet pulls</li>
+        <li>Stainless single-bowl deep sink</li>
+        <li>High-pressure laminate countertops with rolled edging</li>
+        <li>Single-lever spring faucet</li>
+        <li>Under-cabinet lighting</li>
+        <li>Ceramic tile backsplash throughout</li>
+      </ul>
+    </details>
+    <details>
+      <summary>Interior</summary>
+      <ul>
+        <li>1/2" finished sheetrock walls</li>
+        <li>White-wash stained pine ceiling</li>
+        <li>90" sidewall height with extra-high vaulted ceiling</li>
+        <li>Wood interior doors</li>
+        <li>LVP luxury vinyl plank flooring</li>
+        <li>2" window blinds</li>
+        <li>Dual-pane low-E efficient windows</li>
+        <li>Fiberglass batt insulation (R-13 walls, R-13 roof, R-22 floor)</li>
+        <li>100-amp panel box</li>
+        <li>2 exterior GFI receptacles</li>
+        <li>2 smoke/CO detectors</li>
+        <li>PEX plumbing</li>
+        <li>Rinnai tankless on-demand gas water heater</li>
+        <li>20,000 BTU outside condenser</li>
+        <li>9,000 BTU air handlers in living room and bedroom</li>
+        <li>Water shut-off valves throughout</li>
+        <li>Ground-fault breakers in wet areas</li>
+        <li>LED can lighting throughout</li>
+        <li>Ceiling fans with downrods in living room and bedroom</li>
+      </ul>
+    </details>
+    <details>
+      <summary>Bedroom &amp; Bathroom</summary>
+      <ul>
+        <li>54" one-piece white fiberglass tub/shower</li>
+        <li>Exhaust fan</li>
+        <li>Porcelain elongated toilet</li>
+        <li>Decorative oval mirror</li>
+        <li>Solid closet shelving with double hanging rod</li>
+        <li>Ceiling fan with downrod</li>
+        <li>White porcelain sink with metal lav faucet</li>
+        <li>36" built-in drawers in bedroom</li>
+        <li>Barn door with hardware on bedroom</li>
+      </ul>
+    </details>
+    <details>
+      <summary>Popular Options</summary>
+      <p class="note">Add-ons, not standard. Ask Ashley or the team about pricing.</p>
+      <ul>
+        <li>Dishwasher</li>
+        <li>Washer/dryer</li>
+        <li>Quartz countertops</li>
+        <li>Acrylic shower</li>
+        <li>Electric fireplace</li>
+      </ul>
+    </details>
+  </section>
+
+  <footer>
+    Carolina Custom Park Models · 1150 US-70 East, New Bern, NC · <a href="tel:9103100422">910-310-0422</a>
+  </footer>
+</main>
+
+<div class="tour" id="tour" role="dialog" aria-modal="true" aria-label="3D tour">
+  <div class="bar"><span>Coldwater 3D tour · Ashley's still listening</span><button type="button" id="tourClose">Done</button></div>
+  <iframe id="tourFrame" title="Coldwater 3D tour" allow="fullscreen; xr-spatial-tracking" allowfullscreen></iframe>
+</div>
+
+<div class="sheet" id="fin" role="dialog" aria-modal="true" aria-labelledby="finH">
+  <form id="finForm">
+    <h3 id="finH">Financing on the Coldwater</h3>
+    <p class="sub">Melanie handles financing personally and will reach out with real numbers.</p>
+    <ul class="lenders">
+      <li><b>21st Mortgage Corporation</b></li>
+      <li><b>First Flight Federal Credit Union</b></li>
+      <li>Primary home, vacation place, or rental all OK</li>
+    </ul>
+    <label for="fName">Your name</label>
+    <input id="fName" name="name" autocomplete="name" required>
+    <label for="fPhone">Mobile number</label>
+    <input id="fPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
+    <label for="fWhen">Best time to reach you</label>
+    <select id="fWhen" name="when">
+      <option>Anytime</option><option>Morning</option><option>Afternoon</option><option>Evening</option>
+    </select>
+    <button class="go" type="submit" id="fGo">Have Melanie reach out</button>
+    <button class="cancel" type="button" id="fCancel">Not now</button>
+    <p class="alt">Prefer the full credit application? <a href="https://www.carolinacustompm.com/financing" target="_blank" rel="noopener">Open it here</a> (opens a new tab)</p>
+  </form>
+</div>
+
+<div class="sheet" id="sched" role="dialog" aria-modal="true" aria-labelledby="schedH">
+  <form id="schedForm">
+    <h3 id="schedH">Schedule a showing</h3>
+    <p class="sub">Come see the Coldwater in person at Triple S Marina, Atlantic Beach. We'll text or call to confirm.</p>
+    <label for="sName">Your name</label>
+    <input id="sName" name="name" autocomplete="name" required>
+    <label for="sPhone">Mobile number</label>
+    <input id="sPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
+    <div class="row">
+      <div><label for="sDate">Day</label><input id="sDate" name="date" type="date" required></div>
+      <div><label for="sTime">Time</label>
+        <select id="sTime" name="time" required>
+          <option value="Morning (9-12)">Morning (9-12)</option>
+          <option value="Afternoon (12-3)">Afternoon (12-3)</option>
+          <option value="Late afternoon (3-5)">Late afternoon (3-5)</option>
+        </select></div>
+    </div>
+    <button class="go" type="submit" id="sGo">Request this visit</button>
+    <button class="cancel" type="button" id="sCancel">Not now</button>
+    <p class="alt">Rather talk? <a href="tel:9103100422">Call 910-310-0422</a></p>
+  </form>
+</div>
+
+<script src="../elevenlabs-client.js"></script>
+<script>
+(function(){
+  var AGENT_ID = 'agent_8001m4rfhbvreq499gk6h0m1g0ne';
+  var btn = document.getElementById('tapBtn');
+  var status = document.getElementById('status');
+  var convo = null, starting = false;
+
+  function setStatus(html){ status.innerHTML = html; }
+  function idle(msg){
+    convo = null; starting = false;
+    btn.disabled = false; btn.classList.remove('live');
+    btn.textContent = '🎙 Tap to talk to Ashley';
+    setStatus(msg || '');
+  }
+
+  async function start(fromTap){
+    if (convo || starting) return;
+    starting = true;
+    btn.disabled = true; btn.textContent = 'Connecting…';
+    setStatus('<span class="dot"></span>Connecting to Ashley…');
+    try {
+      // Ask for the mic explicitly so the permission prompt appears right away
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+      convo = await ElevenLabsClient.Conversation.startSession({
+        agentId: AGENT_ID,
+        connectionType: 'websocket',
+        onConnect: function(){
+          starting = false;
+          btn.disabled = false; btn.classList.add('live');
+          btn.textContent = 'End conversation';
+          setStatus('<span class="dot listening"></span>Ashley is on. Go ahead and talk.');
+        },
+        onModeChange: function(m){
+          if (!convo) return;
+          setStatus(m.mode === 'speaking'
+            ? '<span class="dot speaking"></span>Ashley is talking…'
+            : '<span class="dot listening"></span>Listening…');
+        },
+        onDisconnect: function(){ idle('Conversation ended. Tap to talk again anytime.'); },
+        onError: function(e){ console.error(e); },
+        clientTools: {
+          open_tour: function(){ openTour(); return '3D tour is open on their screen.'; },
+          open_financing: function(p){ openFin(p && p.name, p && p.phone); return 'Financing form is open on their screen.'; },
+          open_scheduler: function(p){
+            openSched(p && p.name, p && p.phone);
+            return 'Scheduler is open on their screen.';
+          }
+        }
+      });
+    } catch (e) {
+      console.error(e);
+      var denied = e && (e.name === 'NotAllowedError' || e.name === 'SecurityError');
+      idle(fromTap
+        ? (denied ? 'Ashley needs your microphone. Allow mic access in your browser, then tap again.'
+                  : 'Couldn\u2019t connect. Check your signal and tap again, or call 910-310-0422.')
+        : '');
+    }
+  }
+
+  var HOOK = 'https://hook.us2.make.com/7vuau5z9otv2uucmhyo8b8r4xof1qi47';
+
+  // ---- 3D tour overlay (stays on page so Ashley keeps talking) ----
+  var tour = document.getElementById('tour'), tourFrame = document.getElementById('tourFrame');
+  function openTour(){
+    if (!tourFrame.src) tourFrame.src = 'https://my.matterport.com/show/?m=4FuaCpaasMm&play=1&qs=1';
+    tour.classList.add('open');
+  }
+  document.getElementById('tourCard').addEventListener('click', function(e){ e.preventDefault(); openTour(); });
+  document.getElementById('tourClose').addEventListener('click', function(){ tour.classList.remove('open'); });
+
+  function tell(text){ try { if (convo && convo.sendContextualUpdate) convo.sendContextualUpdate(text); } catch(e){} }
+
+  // ---- Financing sheet ----
+  var finSheet = document.getElementById('fin'), finForm = document.getElementById('finForm');
+  function openFin(name, phone){
+    if (name) document.getElementById('fName').value = name;
+    if (phone) document.getElementById('fPhone').value = phone;
+    finForm.querySelector('.sub').textContent = 'Melanie handles financing personally and will reach out with real numbers.';
+    var g = document.getElementById('fGo'); g.disabled = false; g.textContent = 'Have Melanie reach out';
+    finSheet.classList.add('open');
+  }
+  function closeFin(){ finSheet.classList.remove('open'); }
+  document.getElementById('finCard').addEventListener('click', function(e){ e.preventDefault(); openFin(); });
+  document.getElementById('fCancel').addEventListener('click', closeFin);
+  finSheet.addEventListener('click', function(e){ if (e.target === finSheet) closeFin(); });
+  finForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    var f = new FormData(finForm);
+    var msg = 'Coldwater @ Triple S Marina FINANCING request: ' + f.get('name') + ', ' + f.get('phone') + '. Best time: ' + f.get('when') + '.';
+    var go = document.getElementById('fGo'); go.disabled = true; go.textContent = 'Sending…';
+    fetch(HOOK, { method:'POST', mode:'no-cors', body: new URLSearchParams({ message: msg }) })
+      .then(function(){
+        go.textContent = 'Sent ✓';
+        finForm.querySelector('.sub').textContent = 'Got it! Melanie will reach out soon.';
+        tell('The customer just asked for Melanie to reach out about financing. The team has been notified.');
+        setTimeout(closeFin, 2200);
+      })
+      .catch(function(){
+        go.disabled = false; go.textContent = 'Try again';
+        finForm.querySelector('.sub').textContent = "That didn't go through. Try again or call 910-310-0422.";
+      });
+  });
+
+  // ---- Lot visit scheduler ----
+  var sheet = document.getElementById('sched'), form = document.getElementById('schedForm');
+  function openSched(name, phone){
+    if (name) document.getElementById('sName').value = name;
+    if (phone) document.getElementById('sPhone').value = phone;
+    var d = document.getElementById('sDate');
+    var t = new Date(); t.setDate(t.getDate()+1);
+    d.min = new Date().toISOString().slice(0,10);
+    if (!d.value) d.value = t.toISOString().slice(0,10);
+    form.querySelector('.sub').textContent = "Come see the Coldwater in person at Triple S Marina, Atlantic Beach. We'll text or call to confirm.";
+    document.getElementById('sGo').disabled = false;
+    document.getElementById('sGo').textContent = 'Request this visit';
+    sheet.classList.add('open');
+  }
+  function closeSched(){ sheet.classList.remove('open'); }
+  document.getElementById('schedCard').addEventListener('click', function(e){ e.preventDefault(); openSched(); });
+  document.getElementById('sCancel').addEventListener('click', closeSched);
+  sheet.addEventListener('click', function(e){ if (e.target === sheet) closeSched(); });
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var f = new FormData(form);
+    var day = new Date(f.get('date')+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+    var msg = 'Coldwater @ Triple S Marina SHOWING request: ' + f.get('name') + ', ' + f.get('phone') + '. ' + day + ', ' + f.get('time') + '.';
+    var go = document.getElementById('sGo'); go.disabled = true; go.textContent = 'Sending…';
+    fetch(HOOK, { method:'POST', mode:'no-cors', body: new URLSearchParams({ message: msg }) })
+      .then(function(){
+        go.textContent = 'Request sent ✓';
+        form.querySelector('.sub').textContent = "You're all set. The team will reach out to confirm " + day + ".";
+        tell('The customer just submitted a lot visit request for ' + day + ', ' + f.get('time') + '. The team has been notified.');
+        setTimeout(closeSched, 2200);
+      })
+      .catch(function(){
+        go.disabled = false; go.textContent = 'Try again';
+        form.querySelector('.sub').textContent = "That didn't go through. Try again or call 910-310-0422.";
+      });
+  });
+
+  btn.addEventListener('click', function(){
+    if (convo) { var c = convo; convo = null; c.endSession(); return; }
+    start(true);
+  });
+
+  // Browsers block audio until the visitor taps, so only auto-start if the page
+  // already has a user gesture; otherwise the big button is the start.
+  var ua = navigator.userActivation;
+  if (ua && ua.hasBeenActive) {
+    start(false);
+    setTimeout(function(){ if (!convo) idle('Tap the button to start talking with Ashley.'); }, 6000);
+  } else {
+    setStatus('Tap the button and Ashley will walk you through this Coldwater.');
+  }
+})();
+</script>
+</body>
+</html>
