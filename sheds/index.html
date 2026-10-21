@@ -238,9 +238,9 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
 (function(){
   var AGENT_ID = 'agent_1401m5fq1q45e08r0m16k17hy9rt';
   var UNITS = {
-    'A-104': {id:'A-104', name:'10x12 Lofted Barn', short:'10×12 Lofted', size:'10 by 12 feet', dim:"10'×12'", kind:'lofted', cash:4875, mo:223, due:298,
+    'A-104': {id:'A-104', name:'10x20 Pro Lofted Barn', short:'10×20 Lofted', size:'10 by 20 feet', dim:"10'×20'", kind:'lofted', cash:6690, mo:307, due:382, photo:'https://shed-suite.appspot.com.storage.googleapis.com/ecommerce-settings/d1e9c583-024d-4282-8c68-2990a9e80461.jpg',
       feats:['Lofted barn roof with overhead storage','Double doors','6-foot side walls','Pressure-treated floor','Painted siding and trim']},
-    'A-117': {id:'A-117', name:'12x24 Lofted Barn with Porch', short:'12×24 Porch', size:'12 by 24 feet', dim:"12'×24'", kind:'porch', cash:9705, mo:445, due:520,
+    'A-117': {id:'A-117', name:'12x24 Lofted Barn with Porch', short:'12×24 Porch', size:'12 by 24 feet', dim:"12'×24'", kind:'porch', cash:9705, mo:445, due:520, photo:'https://shed-suite.appspot.com.storage.googleapis.com/ecommerce-settings/9bf011be-3112-41b3-80cd-e407163b5036.jpg',
       feats:['Lofted barn roof with large storage loft','Covered front porch','Double doors and two windows','Pressure-treated floor','Painted siding and trim']},
     'G-022': {id:'G-022', name:'12x24 Garage', short:'12×24 Garage', size:'12 by 24 feet', dim:"12'×24'", kind:'garage', cash:9885, mo:453, due:528,
       feats:['Fits a car, truck or ATV and a workbench','8-foot roll-up garage door','Side entry door','Reinforced floor for vehicle weight','Painted siding and trim']}
@@ -289,7 +289,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
 
   var lockedChips = false;
   function renderUnit(){
-    $('art').innerHTML = art(unit);
+    $('art').innerHTML = unit.photo ? '<img src="' + unit.photo + '" alt="' + unit.name + '" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block" onerror="this.outerHTML=window.__art">' : art(unit); window.__art = art(unit);
     $('uName').textContent = unit.name;
     $('uId').textContent = 'Unit ' + unit.id;
     $('uSpec').textContent = unit.dim + ' · ' + unit.feats[0];
