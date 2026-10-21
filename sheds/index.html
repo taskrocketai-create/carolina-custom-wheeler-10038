@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Pinecrest Sheds · Talk to Ashley (Demo)</title>
+<meta name="description" content="Demo: scan a QR code on a shed, talk to Ashley, apply, sign, pay a deposit and schedule delivery. Fictional dealer, nothing is real.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f1ea; --card:#ffffff; --ink:#1d1814; --muted:#675f55; --line:#e6dfd3;
+  --accent:#a8412b; --accent-ink:#ffffff; --soft:#f3ece2; --ok:#2e7d32;
+  --sky:#dfe9ef; --grass:#9db38a; --wall:#b5533a; --trim:#f4efe6; --roof:#3b3733; --door:#efe7d8;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#12100e; --card:#1b1815; --ink:#f1ece4; --muted:#a79f93; --line:#2e2a25;
+    --accent:#e07a60; --accent-ink:#1e0f0a; --soft:#241f1b; --ok:#7fc785;
+    --sky:#243038; --grass:#3f5237; --wall:#a8412b; --trim:#e8e0d2; --roof:#16140f; --door:#d9cfbc;
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:400 15px/1.5 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:500px;margin:0 auto;background:var(--card);min-height:100vh}
+.demo{background:var(--ink);color:var(--bg);font:600 12px/1.3 Inter,sans-serif;text-align:center;padding:8px 14px;letter-spacing:.02em}
+.hero{background:var(--sky);position:relative}
+.hero svg{display:block;width:100%;height:auto}
+.badge{position:absolute;top:12px;left:12px;background:rgba(20,16,12,.78);color:#fff;font:600 11px/1 Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:7px 11px;border-radius:999px}
+.chips{display:flex;gap:8px;padding:12px 18px 0;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 13px;font:600 13px/1 Inter,sans-serif;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.chip[disabled]{opacity:.55;cursor:default}
+.pad{padding:20px 18px}
+.eyebrow{font:700 12px/1 Archivo,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h1{font:800 34px/1.05 Archivo,sans-serif;margin:8px 0 0;letter-spacing:-.01em}
+.stock{font:600 14px/1 Inter,sans-serif;color:var(--muted)}
+.titlerow{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.specs{margin:8px 0 0;font-weight:500}
+.price{display:flex;gap:22px;align-items:flex-end;margin:14px 0 0;flex-wrap:wrap}
+.price div{display:flex;flex-direction:column}
+.plabel{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.pval{font:800 30px/1.1 Archivo,sans-serif}
+.pval.sm{font-size:20px;color:var(--muted)}
+.pnote{margin:6px 0 0;font-size:12px;color:var(--muted)}
+.fin{margin:12px 0 0;padding:10px 12px;background:var(--soft);border-radius:10px;color:var(--muted);font-size:14px}
+.fin b{color:var(--ink);font-weight:600}
+h2{font:700 20px/1.2 Archivo,sans-serif;margin:0 0 12px}
+.talk{border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.talk p{margin:0 0 12px;color:var(--muted)}
+#status{font-size:14px;color:var(--muted);margin-top:10px;min-height:1.3em}
+#tapBtn{display:block;width:100%;border:0;border-radius:12px;padding:18px;background:var(--accent);color:var(--accent-ink);font:700 18px/1 Archivo,sans-serif;cursor:pointer}
+#tapBtn[disabled]{opacity:.6}
+#tapBtn.live{background:#b3261e;color:#fff}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--muted);margin-right:6px;vertical-align:middle}
+.dot.speaking{background:var(--accent);animation:pulse 1s infinite}
+.dot.listening{background:var(--ok)}
+@keyframes pulse{50%{opacity:.35}}
+.steps{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.step{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--card);min-height:64px;width:100%;text-align:left;color:var(--ink);font:inherit;cursor:pointer}
+.step[disabled]{opacity:.5;cursor:default}
+.step.done{background:var(--soft)}
+.num{flex:0 0 40px;height:40px;border-radius:10px;background:var(--soft);display:grid;place-items:center;color:var(--accent);font:800 17px/1 Archivo,sans-serif}
+.step.done .num{background:var(--ok);color:#fff}
+.step b{display:block;font:700 16px/1.25 Archivo,sans-serif}
+.step span.s{font-size:13px;color:var(--muted)}
+.arrow{margin-left:auto;color:var(--muted)}
+details{border-top:1px solid var(--line)}
+details:last-of-type{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;padding:15px 2px;font:700 16px/1.2 Archivo,sans-serif;display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font:500 22px/1 Inter,sans-serif;color:var(--muted)}
+details[open] summary::after{content:"–"}
+details ul{margin:0 0 16px;padding-left:20px}
+details li{margin:3px 0}
+footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted);border-top:1px solid var(--line)}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:flex-end;justify-content:center;z-index:50}
+.sheet.open{display:flex}
+.sheet form,.sheet .box{background:var(--card);color:var(--ink);width:100%;max-width:500px;border-radius:16px 16px 0 0;padding:20px 18px 28px;max-height:92vh;overflow:auto}
+.sheet h3{font:800 22px/1.2 Archivo,sans-serif;margin:0 0 4px}
+.sheet p.sub{margin:0 0 14px;color:var(--muted);font-size:14px}
+.sheet label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin:12px 0 5px}
+.sheet input,.sheet select{width:100%;font:16px Inter,sans-serif;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.sheet input[type=checkbox]{width:auto;margin-right:8px;vertical-align:middle}
+.sheet .chk{display:block;font-weight:500;color:var(--ink);margin:10px 0}
+.sheet .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sheet .go{width:100%;margin-top:18px;border:0;border-radius:12px;padding:16px;background:var(--accent);color:var(--accent-ink);font:700 17px/1 Archivo,sans-serif;cursor:pointer}
+.sheet .go[disabled]{opacity:.6}
+.sheet .cancel{width:100%;margin-top:8px;border:0;background:none;color:var(--muted);font:600 14px Inter,sans-serif;padding:10px;cursor:pointer}
+.sheet .alt{font-size:13px;color:var(--muted);text-align:center;margin-top:8px}
+.terms{border:1px solid var(--line);border-radius:10px;padding:4px 14px;background:var(--bg);font-size:14px}
+.terms div{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}
+.terms div:last-child{border:0}
+.terms span:first-child{color:var(--muted)}
+.terms b{text-align:right}
+.test{display:inline-block;background:var(--soft);color:var(--accent);font:700 11px/1 Inter,sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:6px 9px;border-radius:999px;margin-bottom:8px}
+.done-box{text-align:center}
+.done-box .big{font:800 30px/1.1 Archivo,sans-serif;margin:8px 0}
+.ordno{display:inline-block;font:800 24px/1 Archivo,sans-serif;letter-spacing:.06em;border:2px dashed var(--accent);color:var(--accent);padding:12px 16px;border-radius:10px;margin:10px 0}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="demo">DEMO · Fictional dealer. Nothing is charged, stored or delivered.</div>
+  <div class="hero">
+    <div id="art" role="img" aria-label="Illustration of the shed"></div>
+    <span class="badge" id="badge">On the lot</span>
+  </div>
+  <div class="chips" id="chips" aria-label="Pick a building"></div>
+
+  <section class="pad">
+    <div class="eyebrow">Pinecrest Sheds</div>
+    <div class="titlerow"><h1 id="uName">Lofted Barn</h1><span class="stock" id="uId"></span></div>
+    <p class="specs" id="uSpec"></p>
+    <div class="price">
+      <div><span class="plabel">Cash price</span><span class="pval" id="uCash"></span></div>
+      <div><span class="plabel">Rent-to-own</span><span class="pval sm" id="uMo"></span></div>
+    </div>
+    <p class="pnote">Sample pricing for demo. 36 months to own. No credit check.</p>
+    <p class="fin"><b>Due today</b> · <span id="uDue"></span> (first month + refundable deposit)</p>
+  </section>
+
+  <section class="pad talk" aria-labelledby="talkH">
+    <h2 id="talkH">Talk with Ashley</h2>
+    <p>Ashley is our virtual sales gal. Ask her anything, then let her walk you through applying, signing, paying a deposit and picking a delivery day, all on this page.</p>
+    <button id="tapBtn" type="button">🎙 Tap to talk to Ashley</button>
+    <div id="status" aria-live="polite"></div>
+  </section>
+
+  <section class="pad">
+    <h2>Your order, step by step</h2>
+    <ol class="steps">
+      <li><button class="step" id="s1" type="button"><span class="num">1</span><span><b>Apply</b><br><span class="s">Rent-to-own application</span></span><span class="arrow">›</span></button></li>
+      <li><button class="step" id="s2" type="button" disabled><span class="num">2</span><span><b>Sign</b><br><span class="s">Review and sign the agreement</span></span><span class="arrow">›</span></button></li>
+      <li><button class="step" id="s3" type="button" disabled><span class="num">3</span><span><b>Pay deposit</b><br><span class="s">Test mode, no real card</span></span><span class="arrow">›</span></button></li>
+      <li><button class="step" id="s4" type="button" disabled><span class="num">4</span><span><b>Schedule delivery</b><br><span class="s">Pick a day and window</span></span><span class="arrow">›</span></button></li>
+    </ol>
+  </section>
+
+  <section class="pad" aria-labelledby="specH">
+    <h2 id="specH">What's included</h2>
+    <details open><summary>This building</summary><ul id="uFeat"></ul></details>
+    <details><summary>Rent-to-own basics</summary>
+      <ul>
+        <li>No credit check</li>
+        <li>36 months to own, pay off early anytime</li>
+        <li>Free delivery and setup within 50 miles</li>
+        <li>You handle county permits and setback rules</li>
+      </ul>
+    </details>
+  </section>
+
+  <footer>Pinecrest Sheds is a fictional company for demonstration · (555) 010-0100<br>Built by TaskRocket Business Automations</footer>
+</main>
+
+<div class="sheet" id="shApply" role="dialog" aria-modal="true" aria-labelledby="aH">
+  <form id="fApply">
+    <h3 id="aH">Rent-to-own application</h3>
+    <p class="sub">Demo form. Use made-up info. Nothing is saved or sent anywhere.</p>
+    <label for="aName">Full name</label><input id="aName" required autocomplete="name">
+    <div class="row">
+      <div><label for="aPhone">Mobile</label><input id="aPhone" type="tel" inputmode="tel" required autocomplete="tel"></div>
+      <div><label for="aEmail">Email</label><input id="aEmail" type="email" required autocomplete="email"></div>
+    </div>
+    <label for="aAddr">Delivery address</label><input id="aAddr" required autocomplete="street-address" placeholder="123 Country Rd, Wilson NC">
+    <div class="row">
+      <div><label for="aEmp">Employer</label><input id="aEmp" required></div>
+      <div><label for="aInc">Monthly income</label>
+        <select id="aInc"><option>Under $2,000</option><option selected>$2,000 – $3,500</option><option>$3,500 – $5,500</option><option>Over $5,500</option></select></div>
+    </div>
+    <label class="chk"><input type="checkbox" id="aOwn" required> I own the property or have the owner's OK</label>
+    <button class="go" type="submit" id="aGo">Submit application</button>
+    <button class="cancel" type="button" data-close="shApply">Not now</button>
+  </form>
+</div>
+
+<div class="sheet" id="shSign" role="dialog" aria-modal="true" aria-labelledby="gH">
+  <form id="fSign">
+    <h3 id="gH">Rent-to-own agreement</h3>
+    <p class="sub">Key terms in plain English. Sample only.</p>
+    <div class="terms" id="terms"></div>
+    <label for="gSig">Type your full name to sign</label>
+    <input id="gSig" required autocomplete="off" placeholder="Your full name">
+    <label class="chk"><input type="checkbox" id="gOk" required> I've read the terms and agree to sign electronically</label>
+    <button class="go" type="submit" id="gGo">Sign agreement</button>
+    <button class="cancel" type="button" data-close="shSign">Not now</button>
+  </form>
+</div>
+
+<div class="sheet" id="shPay" role="dialog" aria-modal="true" aria-labelledby="pH">
+  <form id="fPay">
+    <span class="test">Test mode · no real charge</span>
+    <h3 id="pH">Pay your deposit</h3>
+    <p class="sub" id="pSub"></p>
+    <label for="pCard">Card number</label><input id="pCard" value="4242 4242 4242 4242" inputmode="numeric" autocomplete="off" required>
+    <div class="row">
+      <div><label for="pExp">Expires</label><input id="pExp" value="12 / 30" required></div>
+      <div><label for="pCvc">CVC</label><input id="pCvc" value="123" required></div>
+    </div>
+    <button class="go" type="submit" id="pGo">Pay</button>
+    <button class="cancel" type="button" data-close="shPay">Not now</button>
+  </form>
+</div>
+
+<div class="sheet" id="shDel" role="dialog" aria-modal="true" aria-labelledby="dH">
+  <form id="fDel">
+    <h3 id="dH">Schedule delivery</h3>
+    <p class="sub">Free delivery and setup within 50 miles. We'll text the day before.</p>
+    <label class="chk"><input type="checkbox" required> The site is reasonably level</label>
+    <label class="chk"><input type="checkbox" required> There's a clear path at least 14 feet wide</label>
+    <label class="chk"><input type="checkbox" required> I've checked county permit and setback rules</label>
+    <div class="row">
+      <div><label for="dDate">Day</label><input id="dDate" type="date" required></div>
+      <div><label for="dWin">Arrival window</label>
+        <select id="dWin"><option>8 – 11 AM</option><option>11 AM – 2 PM</option><option>2 – 5 PM</option></select></div>
+    </div>
+    <button class="go" type="submit" id="dGo">Confirm delivery</button>
+    <button class="cancel" type="button" data-close="shDel">Not now</button>
+  </form>
+</div>
+
+<div class="sheet" id="shDone" role="dialog" aria-modal="true" aria-labelledby="oH">
+  <div class="box done-box">
+    <div class="eyebrow">Order confirmed</div>
+    <div class="big" id="oH">You're all set!</div>
+    <div class="ordno" id="ordNo">DEMO-0000</div>
+    <p id="oSum" style="color:var(--muted);margin:6px 0 0"></p>
+    <p style="margin:16px 0 0"><b>This is where the demo ends.</b> Nothing was charged, saved or scheduled. In a real build, the dealer's team gets this order the moment it's placed.</p>
+    <button class="go" type="button" id="oClose" style="width:100%;margin-top:18px;border:0;border-radius:12px;padding:16px;background:var(--accent);color:var(--accent-ink);font:700 17px/1 Archivo,sans-serif;cursor:pointer">Close</button>
+  </div>
+</div>
+
+<script src="/elevenlabs-client.js"></script>
+<script>
+(function(){
+  var AGENT_ID = 'agent_1401m5fq1q45e08r0m16k17hy9rt';
+  var UNITS = {
+    'A-104': {id:'A-104', name:'10x12 Lofted Barn', short:'10×12 Lofted', size:'10 by 12 feet', dim:"10'×12'", kind:'lofted', cash:4875, mo:223, due:298,
+      feats:['Lofted barn roof with overhead storage','Double doors','6-foot side walls','Pressure-treated floor','Painted siding and trim']},
+    'A-117': {id:'A-117', name:'12x24 Lofted Barn with Porch', short:'12×24 Porch', size:'12 by 24 feet', dim:"12'×24'", kind:'porch', cash:9705, mo:445, due:520,
+      feats:['Lofted barn roof with large storage loft','Covered front porch','Double doors and two windows','Pressure-treated floor','Painted siding and trim']},
+    'G-022': {id:'G-022', name:'12x24 Garage', short:'12×24 Garage', size:'12 by 24 feet', dim:"12'×24'", kind:'garage', cash:9885, mo:453, due:528,
+      feats:['Fits a car, truck or ATV and a workbench','8-foot roll-up garage door','Side entry door','Reinforced floor for vehicle weight','Painted siding and trim']}
+  };
+  function $(id){ return document.getElementById(id); }
+  function money(n){ return '$' + n.toLocaleString('en-US'); }
+
+  var unit = UNITS['A-104'];
+  var q = new URLSearchParams(location.search).get('unit');
+  if (q && UNITS[q.toUpperCase()]) unit = UNITS[q.toUpperCase()];
+
+  // ---- illustration ----
+  function art(u){
+    var k = u.kind, W = k === 'lofted' ? 200 : 280, x0 = (420 - W) / 2, bodyH = 90, top = 130, bx = x0;
+    var s = '<svg viewBox="0 0 420 270" xmlns="http://www.w3.org/2000/svg" width="420" height="270">';
+    s += '<rect width="420" height="270" fill="var(--sky)"/><rect y="200" width="420" height="70" fill="var(--grass)"/>';
+    s += '<ellipse cx="210" cy="206" rx="' + (W/2 + 24) + '" ry="8" fill="rgba(0,0,0,.18)"/>';
+    s += '<rect x="' + bx + '" y="' + (top + 20) + '" width="' + W + '" height="' + bodyH + '" fill="var(--wall)"/>';
+    // barn roof (gambrel-ish)
+    var rl = bx - 10, rr = bx + W + 10, ry = top + 20;
+    s += '<polygon points="' + rl + ',' + ry + ' ' + (bx + W*0.14) + ',' + (top - 18) + ' ' + (bx + W*0.5) + ',' + (top - 34) + ' ' + (bx + W*0.86) + ',' + (top - 18) + ' ' + rr + ',' + ry + '" fill="var(--roof)"/>';
+    s += '<rect x="' + bx + '" y="' + (top + 17) + '" width="' + W + '" height="5" fill="var(--trim)"/>';
+    if (k === 'garage'){
+      var gx = bx + 24, gw = 150;
+      s += '<rect x="' + gx + '" y="' + (top + 36) + '" width="' + gw + '" height="' + (bodyH - 16) + '" fill="var(--door)" stroke="var(--trim)" stroke-width="3"/>';
+      for (var i = 1; i < 5; i++) s += '<line x1="' + gx + '" x2="' + (gx + gw) + '" y1="' + (top + 36 + i*14) + '" y2="' + (top + 36 + i*14) + '" stroke="rgba(0,0,0,.18)" stroke-width="2"/>';
+      s += '<rect x="' + (bx + W - 70) + '" y="' + (top + 48) + '" width="38" height="62" fill="var(--door)" stroke="var(--trim)" stroke-width="3"/>';
+      s += '<circle cx="' + (bx + W - 76 + 38) + '" cy="' + (top + 82) + '" r="2.5" fill="var(--roof)"/>';
+    } else {
+      var dx = bx + W/2 - 30;
+      s += '<rect x="' + dx + '" y="' + (top + 40) + '" width="60" height="70" fill="var(--door)" stroke="var(--trim)" stroke-width="3"/>';
+      s += '<line x1="' + (dx + 30) + '" x2="' + (dx + 30) + '" y1="' + (top + 40) + '" y2="' + (top + 110) + '" stroke="var(--trim)" stroke-width="3"/>';
+      s += '<line x1="' + dx + '" x2="' + (dx + 60) + '" y1="' + (top + 40) + '" y2="' + (top + 110) + '" stroke="var(--trim)" stroke-width="2.5"/><line x1="' + (dx + 60) + '" x2="' + dx + '" y1="' + (top + 40) + '" y2="' + (top + 110) + '" stroke="var(--trim)" stroke-width="2.5"/>';
+      if (k === 'porch'){
+        s += '<rect x="' + (bx - 6) + '" y="' + (top + 8) + '" width="' + (W + 12) + '" height="10" fill="var(--roof)"/>';
+        s += '<rect x="' + (bx + 6) + '" y="' + (top + 18) + '" width="6" height="92" fill="var(--trim)"/><rect x="' + (bx + W - 12) + '" y="' + (top + 18) + '" width="6" height="92" fill="var(--trim)"/>';
+        s += '<rect x="' + (bx - 8) + '" y="' + (top + 110) + '" width="' + (W + 16) + '" height="6" fill="var(--trim)"/>';
+        s += '<rect x="' + (bx + 24) + '" y="' + (top + 50) + '" width="34" height="34" fill="var(--sky)" stroke="var(--trim)" stroke-width="3"/><rect x="' + (bx + W - 58) + '" y="' + (top + 50) + '" width="34" height="34" fill="var(--sky)" stroke="var(--trim)" stroke-width="3"/>';
+      } else {
+        s += '<rect x="' + (bx + 18) + '" y="' + (top + 52) + '" width="28" height="28" fill="var(--sky)" stroke="var(--trim)" stroke-width="3"/>';
+      }
+    }
+    s += '</svg>';
+    return s;
+  }
+
+  var lockedChips = false;
+  function renderUnit(){
+    $('art').innerHTML = art(unit);
+    $('uName').textContent = unit.name;
+    $('uId').textContent = 'Unit ' + unit.id;
+    $('uSpec').textContent = unit.dim + ' · ' + unit.feats[0];
+    $('uCash').textContent = money(unit.cash);
+    $('uMo').textContent = money(unit.mo) + '/mo';
+    $('uDue').textContent = money(unit.due);
+    $('uFeat').innerHTML = unit.feats.map(function(f){ return '<li>' + f + '</li>'; }).join('');
+    $('badge').textContent = unit.kind === 'garage' ? 'Garage · On the lot' : 'On the lot';
+    $('pSub').textContent = money(unit.due) + ' today: first month (' + money(unit.mo) + ') plus a refundable $75 deposit.';
+    var c = $('chips'); c.innerHTML = '';
+    Object.keys(UNITS).forEach(function(k){
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = UNITS[k].short;
+      b.setAttribute('aria-pressed', UNITS[k] === unit ? 'true' : 'false'); b.disabled = lockedChips;
+      b.addEventListener('click', function(){ unit = UNITS[k]; resetOrder(); renderUnit(); });
+      c.appendChild(b);
+    });
+  }
+
+  // ---- order state ----
+  var step = 0, order = {};
+  function resetOrder(){ step = 0; order = {}; paintSteps(); }
+  function paintSteps(){
+    for (var i = 1; i <= 4; i++){
+      var b = $('s' + i);
+      b.classList.toggle('done', step >= i);
+      b.disabled = (step !== i - 1);
+      b.querySelector('.arrow').textContent = step >= i ? '✓' : '›';
+    }
+  }
+
+  // ---- voice ----
+  var btn = $('tapBtn'), statusEl = $('status'), convo = null, starting = false;
+  function setStatus(h){ statusEl.innerHTML = h; }
+  function setChips(lock){ lockedChips = lock; var cs = document.querySelectorAll('.chip'); for (var i = 0; i < cs.length; i++) cs[i].disabled = lock; }
+  function idle(msg){
+    convo = null; starting = false; btn.disabled = false; btn.classList.remove('live');
+    btn.textContent = '🎙 Tap to talk to Ashley'; setStatus(msg || ''); setChips(false);
+  }
+  function tell(t){ try { if (convo && convo.sendContextualUpdate) convo.sendContextualUpdate(t); } catch(e){} }
+
+  async function start(fromTap){
+    if (convo || starting) return;
+    starting = true; setChips(true);
+    btn.disabled = true; btn.textContent = 'Connecting…';
+    setStatus('<span class="dot"></span>Connecting to Ashley…');
+    try {
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+      convo = await ElevenLabsClient.Conversation.startSession({
+        agentId: AGENT_ID,
+        connectionType: 'websocket',
+        dynamicVariables: {
+          unit_id: unit.id, unit_name: unit.name, unit_size: unit.size,
+          cash_price: money(unit.cash), monthly: money(unit.mo), deposit_due: money(unit.due),
+          unit_features: unit.feats.join(', ')
+        },
+        onConnect: function(){
+          starting = false; btn.disabled = false; btn.classList.add('live'); btn.textContent = 'End conversation';
+          setStatus('<span class="dot listening"></span>Ashley is on. Go ahead and talk.');
+        },
+        onModeChange: function(m){
+          if (!convo) return;
+          setStatus(m.mode === 'speaking' ? '<span class="dot speaking"></span>Ashley is talking…' : '<span class="dot listening"></span>Listening…');
+        },
+        onDisconnect: function(){ idle('Conversation ended. Tap to talk again anytime.'); },
+        onError: function(e){ console.error(e); },
+        clientTools: {
+          open_application: function(p){ if (step > 0) return 'The application is already submitted and approved. Move on to the agreement.'; openApply(p && p.name, p && p.phone); return 'The application form is open on their screen. Wait for the page to tell you it was submitted.'; },
+          open_agreement: function(){ if (step < 1) return 'Not yet. The application has to be submitted first. Use open_application.'; if (step > 1) return 'The agreement is already signed. Move on.'; openSign(); return 'The agreement is open on their screen. Wait for the page to tell you it was signed.'; },
+          open_payment: function(){ if (step < 2) return 'Not yet. The agreement has to be signed first. Use open_agreement.'; if (step > 2) return 'The deposit is already paid. Move on.'; openPay(); return 'The payment form is open in test mode. Tell them to tap Pay.'; },
+          open_delivery: function(){ if (step < 3) return 'Not yet. The deposit has to be paid first. Use open_payment.'; if (step > 3) return 'Delivery is already scheduled.'; openDel(); return 'The delivery scheduler is open on their screen.'; }
+        }
+      });
+    } catch (e) {
+      console.error(e);
+      var denied = e && (e.name === 'NotAllowedError' || e.name === 'SecurityError');
+      idle(fromTap ? (denied ? 'Ashley needs your microphone. Allow mic access in your browser, then tap again.' : 'Couldn’t connect. Check your signal and tap again.') : '');
+    }
+  }
+  btn.addEventListener('click', function(){
+    if (convo) { var c = convo; convo = null; c.endSession(); return; }
+    start(true);
+  });
+
+  // ---- sheets ----
+  function open(id){ $(id).classList.add('open'); }
+  function close(id){ $(id).classList.remove('open'); }
+  var closers = document.querySelectorAll('[data-close]');
+  for (var i = 0; i < closers.length; i++) closers[i].addEventListener('click', function(e){ close(e.currentTarget.getAttribute('data-close')); });
+  ['shApply','shSign','shPay','shDel'].forEach(function(id){ $(id).addEventListener('click', function(e){ if (e.target === $(id)) close(id); }); });
+  $('s1').addEventListener('click', function(){ openApply(); });
+  $('s2').addEventListener('click', openSign);
+  $('s3').addEventListener('click', openPay);
+  $('s4').addEventListener('click', openDel);
+
+  function busy(btnEl, label, after){
+    btnEl.disabled = true; var old = btnEl.textContent; btnEl.textContent = label;
+    setTimeout(function(){ btnEl.disabled = false; btnEl.textContent = old; after(); }, 1100);
+  }
+
+  function openApply(name, phone){
+    if (name) $('aName').value = name; if (phone) $('aPhone').value = phone; open('shApply');
+  }
+  $('fApply').addEventListener('submit', function(e){
+    e.preventDefault();
+    busy($('aGo'), 'Checking…', function(){
+      order.name = $('aName').value.trim(); order.addr = $('aAddr').value.trim();
+      step = 1; paintSteps(); close('shApply');
+      tell('The application was submitted by ' + order.name + ' and is APPROVED instantly (no credit check). Congratulate them and open the agreement with open_agreement.');
+    });
+  });
+
+  function openSign(){
+    $('terms').innerHTML = [
+      ['Building', unit.name + ' (' + unit.id + ')'],
+      ['Term', '36 monthly payments'],
+      ['Payment', money(unit.mo) + ' / month'],
+      ['Due today', money(unit.due) + ' (first month + $75 refundable deposit)'],
+      ['Ownership', 'Yours after payment 36, or pay off early'],
+      ['Delivery', 'Free setup within 50 miles'],
+      ['Permits', 'Your responsibility']
+    ].map(function(r){ return '<div><span>' + r[0] + '</span><b>' + r[1] + '</b></div>'; }).join('');
+    open('shSign');
+  }
+  $('fSign').addEventListener('submit', function(e){
+    e.preventDefault();
+    busy($('gGo'), 'Signing…', function(){
+      step = 2; paintSteps(); close('shSign');
+      tell('The agreement was just signed electronically by ' + $('gSig').value.trim() + '. Next, open the deposit payment with open_payment and tell them it is test mode, just tap Pay.');
+    });
+  });
+
+  function openPay(){ open('shPay'); $('pGo').textContent = 'Pay ' + money(unit.due); }
+  $('fPay').addEventListener('submit', function(e){
+    e.preventDefault();
+    busy($('pGo'), 'Processing…', function(){
+      step = 3; paintSteps(); close('shPay');
+      tell('The test deposit of ' + money(unit.due) + ' went through. Next, open the delivery scheduler with open_delivery.');
+    });
+  });
+
+  function openDel(){
+    var d = $('dDate'), t = new Date(); t.setDate(t.getDate() + 7);
+    var m = new Date(); m.setDate(m.getDate() + 3);
+    d.min = m.toISOString().slice(0, 10); if (!d.value) d.value = t.toISOString().slice(0, 10);
+    open('shDel');
+  }
+  $('fDel').addEventListener('submit', function(e){
+    e.preventDefault();
+    busy($('dGo'), 'Booking…', function(){
+      var day = new Date($('dDate').value + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+      var win = $('dWin').value;
+      order.no = 'DEMO-' + String(Math.floor(1000 + Math.random() * 9000));
+      step = 4; paintSteps(); close('shDel');
+      $('ordNo').textContent = order.no;
+      $('oSum').textContent = unit.name + ' · delivery ' + day + ', ' + win + '.';
+      open('shDone');
+      tell('Delivery is scheduled for ' + day + ', ' + win + '. The demo order number is ' + order.no + '. Celebrate, read the order number slowly, remind them this was a demo and nothing was charged, then ask if they have questions.');
+    });
+  });
+  $('oClose').addEventListener('click', function(){ close('shDone'); });
+
+  renderUnit(); paintSteps();
+  var ua = navigator.userActivation;
+  if (ua && ua.hasBeenActive) { start(false); setTimeout(function(){ if (!convo) idle('Tap the button to start talking with Ashley.'); }, 6000); }
+  else setStatus('Pick a building above, then tap the button and Ashley will take it from there.');
+})();
+</script>
+</body>
+</html>
