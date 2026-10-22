@@ -359,6 +359,14 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
           open_application: function(p){ if (step > 0) return 'The application is already submitted and approved. Move on to the agreement.'; openApply(p && p.name, p && p.phone); return 'The application form is open on their screen. Wait for the page to tell you it was submitted.'; },
           open_agreement: function(){ if (step < 1) return 'Not yet. The application has to be submitted first. Use open_application.'; if (step > 1) return 'The agreement is already signed. Move on.'; openSign(); return 'The agreement is open on their screen. Wait for the page to tell you it was signed.'; },
           open_payment: function(){ if (step < 2) return 'Not yet. The agreement has to be signed first. Use open_agreement.'; if (step > 2) return 'The deposit is already paid. Move on.'; openPay(); return 'The payment form is open in test mode. Tell them to tap Pay.'; },
+          show_unit: function(p){
+            var id = String((p && p.unit_id) || '').toUpperCase(), u = UNITS[id];
+            if (!u) return 'No such building. Valid ids are A-104, A-117 and G-022.';
+            if (step > 0) return 'The application is already started, so the building is locked in.';
+            unit = u; renderUnit();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return 'The screen now shows ' + u.name + ' (' + u.id + '): ' + u.size + ', cash ' + money(u.cash) + ', rent-to-own ' + money(u.mo) + ' a month for 36 months, ' + money(u.due) + ' due today. Features: ' + u.feats.join(', ') + '. Use these details from now on.';
+          },
           open_delivery: function(){ if (step < 3) return 'Not yet. The deposit has to be paid first. Use open_payment.'; if (step > 3) return 'Delivery is already scheduled.'; openDel(); return 'The delivery scheduler is open on their screen.'; }
         }
       });
