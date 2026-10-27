@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Ashley Pitch">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="robots" content="noindex">
+<title>Ashley Pitch</title>
+<style>
+:root{--bg:#faf7f2;--fg:#1d1a17;--card:#fff;--line:#e6dfd4;--acc:#a8412b;--mut:#6b6258}
+@media (prefers-color-scheme:dark){:root{--bg:#161412;--fg:#f3eee6;--card:#221f1c;--line:#3a352f;--acc:#e0714f;--mut:#a39a8e}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.4 system-ui,-apple-system,sans-serif;padding:max(16px,env(safe-area-inset-top)) 16px max(16px,env(safe-area-inset-bottom))}
+main{max-width:520px;margin:0 auto}
+h1{font-size:22px;margin:8px 0 14px}
+.btn{display:block;width:100%;text-align:left;text-decoration:none;color:inherit;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 18px;margin-bottom:12px;font:inherit}
+.btn b{display:block;font-size:20px;color:var(--acc)}
+.btn small{color:var(--mut);font-size:14px}
+.view{display:none}.view.on{display:block}
+.back{background:none;border:0;color:var(--acc);font:600 16px system-ui;padding:8px 0;margin-bottom:6px}
+#qr img{width:min(92vw,520px);display:block;margin:0 auto}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:15px}
+th,td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--line)}
+th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut)}
+td.n{font-variant-numeric:tabular-nums}
+ul{padding-left:20px}
+</style></head><body><main>
+<div id="home" class="view on">
+<h1>Ashley · Pitch</h1>
+<button class="btn" onclick="show('qr')"><b>Show QR code</b><small>Let them scan it. Opens Ashley.</small></button>
+<a class="btn" href="/sheds/"><b>Try Ashley now</b><small>Shed demo on this phone</small></a>
+<button class="btn" onclick="show('price')"><b>Pricing</b><small>Tiers, setup, conversation caps</small></button>
+<a class="btn" href="/"><b>Park model demo</b><small>Carolina Custom, Wheeler #10038</small></a>
+</div>
+<div id="qr" class="view"><button class="back" onclick="show('home')">‹ Back</button><img src="/pitch/ashley.png" alt="QR code to talk to Ashley"></div>
+<div id="price" class="view"><button class="back" onclick="show('home')">‹ Back</button>
+<h1>Flat monthly fee per lot</h1>
+<table><tr><th>Buildings</th><th>Monthly</th><th>Setup</th><th>Convos/mo</th></tr>
+<tr><td>Up to 25</td><td class="n">$199</td><td class="n">$500</td><td class="n">150</td></tr>
+<tr><td>26–60</td><td class="n">$349</td><td class="n">$750</td><td class="n">250</td></tr>
+<tr><td>61–100</td><td class="n">$499</td><td class="n">$1,000</td><td class="n">350</td></tr>
+<tr><td>100+</td><td colspan="3">Quote individually</td></tr></table>
+<p>Extra conversations $0.60 each, or move up a tier.</p>
+<p><b>Ask:</b></p><ul><li>How many buildings?</li><li>What system holds inventory?</li><li>Can it export a CSV?</li></ul>
+<p><b>Loading:</b> CSV or feed = low-end setup. Hand entry = $500+. Start with plans only; upgrade to live per-building inventory (color, doors, position on lot).</p>
+</div>
+</main>
+<script>function show(i){document.querySelectorAll('.view').forEach(function(v){v.classList.toggle('on',v.id===i)});window.scrollTo(0,0)}</script>
+</body></html>
