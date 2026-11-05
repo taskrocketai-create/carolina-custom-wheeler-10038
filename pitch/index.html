@@ -18,7 +18,7 @@ h1{font-size:22px;margin:8px 0 14px}
 .btn small{color:var(--mut);font-size:14px}
 .view{display:none}.view.on{display:block}
 .back{background:none;border:0;color:var(--acc);font:600 16px system-ui;padding:8px 0;margin-bottom:6px}
-#qr img{width:min(92vw,520px);display:block;margin:0 auto}
+.view img{width:min(92vw,520px);height:auto;display:block;margin:0 auto}
 table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:15px}
 th,td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--line)}
 th{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut)}
@@ -27,12 +27,28 @@ ul{padding-left:20px}
 </style></head><body><main>
 <div id="home" class="view on">
 <h1>Ashley · Pitch</h1>
-<button class="btn" onclick="show('qr')"><b>Show QR code</b><small>Let them scan it. Opens Ashley.</small></button>
-<a class="btn" href="/sheds/"><b>Try Ashley now</b><small>Shed demo on this phone</small></a>
+<button class="btn" onclick="show('qr')"><b>Show QR code</b><small>Pick the dealer type. They scan, Ashley opens.</small></button>
+<button class="btn" onclick="show('demos')"><b>Try Ashley now</b><small>Demo on this phone, by dealer type</small></button>
 <button class="btn" onclick="show('price')"><b>Pricing</b><small>Tiers, setup, conversation caps</small></button>
-<a class="btn" href="/"><b>Park model demo</b><small>Carolina Custom, Wheeler #10038</small></a>
 </div>
-<div id="qr" class="view"><button class="back" onclick="show('home')">‹ Back</button><img src="/pitch/ashley.png" alt="QR code to talk to Ashley"></div>
+<div id="qr" class="view"><button class="back" onclick="show('home')">‹ Back</button>
+<h1>Show QR code</h1>
+<button class="btn" onclick="show('qr-sheds')"><b>Sheds</b><small>Pinecrest Sheds demo</small></button>
+<button class="btn" onclick="show('qr-park')"><b>Park models</b><small>Carolina Custom, Wheeler #10038</small></button>
+<button class="btn" onclick="show('qr-rv')"><b>RV</b><small>Pinecrest RV demo</small></button>
+<button class="btn" onclick="show('qr-mh')"><b>Mobile homes</b><small>Pinecrest Homes demo</small></button>
+</div>
+<div id="qr-sheds" class="view"><button class="back" onclick="show('qr')">‹ Back</button><img src="/pitch/ashley.png" alt="QR code to the shed demo"></div>
+<div id="qr-park" class="view"><button class="back" onclick="show('qr')">‹ Back</button><img src="/pitch/park-models.png" alt="QR code to the park model demo"></div>
+<div id="qr-rv" class="view"><button class="back" onclick="show('qr')">‹ Back</button><img src="/pitch/rv.png" alt="QR code to the RV demo"></div>
+<div id="qr-mh" class="view"><button class="back" onclick="show('qr')">‹ Back</button><img src="/pitch/mobile-homes.png" alt="QR code to the mobile home demo"></div>
+<div id="demos" class="view"><button class="back" onclick="show('home')">‹ Back</button>
+<h1>Try Ashley</h1>
+<a class="btn" href="/sheds/"><b>Sheds</b><small>Pinecrest Sheds</small></a>
+<a class="btn" href="/"><b>Park models</b><small>Carolina Custom, Wheeler #10038</small></a>
+<a class="btn" href="/rv/"><b>RV</b><small>Pinecrest RV</small></a>
+<a class="btn" href="/mobile-homes/"><b>Mobile homes</b><small>Pinecrest Homes</small></a>
+</div>
 <div id="price" class="view"><button class="back" onclick="show('home')">‹ Back</button>
 <h1>Flat monthly fee per lot</h1>
 <table><tr><th>Buildings</th><th>Monthly</th><th>Setup</th><th>Convos/mo</th></tr>
