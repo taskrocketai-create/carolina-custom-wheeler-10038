@@ -109,7 +109,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
     <div id="art" role="img" aria-label="Illustration of the RV"></div>
     <span class="badge" id="badge">On the lot</span>
   </div>
-  <div class="chips" id="chips" aria-label="Pick a RV"></div>
+  <div class="chips" id="chips" aria-label="Pick an RV"></div>
 
   <section class="pad">
     <div class="eyebrow">Pinecrest RV</div>
@@ -152,6 +152,10 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
         <li>Check your truck's tow rating with the lot team</li>
       </ul>
     </details>
+  </section>
+
+  <section class="pad" aria-label="Built for your lot">
+    <p class="fin"><b>Built for your lot.</b> This is a demo. Your version uses your units, prices, financing and deposit terms, delivery or visit rules, and Ashley's name and voice. Tell Alan at TaskRocket what you'd change.</p>
   </section>
 
   <footer>Pinecrest RV is a fictional company for demonstration · (555) 010-0100<br>Built by TaskRocket Business Automations</footer>
@@ -465,7 +469,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
   renderUnit(); paintSteps();
   var ua = navigator.userActivation;
   if (ua && ua.hasBeenActive) { start(false); setTimeout(function(){ if (!convo) idle('Tap the button to start talking with Ashley.'); }, 6000); }
-  else setStatus('Pick a RV above, then tap the button and Ashley will take it from there.');
+  else setStatus('Pick an RV above, then tap the button and Ashley will take it from there.');
 })();
 </script>
 </body>
