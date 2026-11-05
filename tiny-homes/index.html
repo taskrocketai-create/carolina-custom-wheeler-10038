@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Pinecrest Tiny Homes & Coastal Cottages · Talk to Ashley (Demo)</title>
-<meta name="description" content="Demo: scan a QR code on a tiny home, talk to Ashley, submit a credit application, sign and sign and schedule a site visit. Fictional dealer, nothing is real.">
+<title>Pinecrest Tiny Homes · Talk to Ashley (Demo)</title>
+<meta name="description" content="Demo: scan a QR code on a tiny home, talk to Ashley, submit a credit application, sign and sign and schedule a delivery visit. Fictional dealer, nothing is real.">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -122,7 +122,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
   <div class="chips" id="chips" aria-label="Pick a home"></div>
 
   <section class="pad">
-    <div class="eyebrow">Pinecrest Tiny Homes & Coastal Cottages</div>
+    <div class="eyebrow">Pinecrest Tiny Homes</div>
     <div class="titlerow"><h1 id="uName">Tiny Home</h1><span class="stock" id="uId"></span></div>
     <p class="specs" id="uSpec"></p>
     <div class="price">
@@ -134,7 +134,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
 
   <section class="pad talk" aria-labelledby="talkH">
     <h2 id="talkH">Talk with Ashley</h2>
-    <p>Ashley is our virtual sales gal. Ask her anything, then let her walk you through a credit application, signing and booking your site visit, all on this page.</p>
+    <p>Ashley is our virtual sales gal. Ask her anything, then let her walk you through a credit application, signing and booking your delivery visit, all on this page.</p>
     <button id="tapBtn" type="button">🎙 Tap to talk to Ashley</button>
     <div id="status" aria-live="polite"></div>
   </section>
@@ -144,20 +144,20 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
     <ol class="steps">
       <li><button class="step" id="s1" type="button"><span class="num">1</span><span><b>Credit application</b><br><span class="s">Quick soft check, no impact to your score</span></span><span class="arrow">›</span></button></li>
       <li><button class="step" id="s2" type="button" disabled><span class="num">2</span><span><b>Sign</b><br><span class="s">Review and sign the purchase agreement</span></span><span class="arrow">›</span></button></li>
-      <li><button class="step" id="s3" type="button" disabled><span class="num">3</span><span><b>Schedule site visit</b><br><span class="s">Pick a day and time</span></span><span class="arrow">›</span></button></li>
+      <li><button class="step" id="s3" type="button" disabled><span class="num">3</span><span><b>Schedule delivery visit</b><br><span class="s">Pick a day and time</span></span><span class="arrow">›</span></button></li>
     </ol>
   </section>
 
   <section class="pad" aria-labelledby="specH">
     <h2 id="specH">What's included</h2>
     <details open><summary>This home</summary><ul id="uFeat"></ul></details>
-    <details><summary>Financing and setup basics</summary>
+    <details><summary>Financing and delivery basics</summary>
       <ul>
         <li>Sample financing, subject to approval</li>
         <li>36 months to own, pay off early anytime</li>
         <li>Price is for the home only</li>
-        <li>Buyer checks zoning, flood zone and short-term rental rules with the county, town or HOA</li>
-        <li>Delivery, piers or pilings, skirting and utility hookups are quoted separately after a site visit</li>
+        <li>Buyer confirms with the county, town or park where the home can be parked or lived in</li>
+        <li>Delivery, setup, skirting and utility hookups are quoted separately</li>
       </ul>
     </details>
   </section>
@@ -166,7 +166,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
     <p class="fin"><b>Built for your lot.</b> This is a demo. Your version uses your units, prices, financing and credit-application rules, delivery or visit rules, and Ashley's name and voice. Tell Alan at TaskRocket what you'd change.</p>
   </section>
 
-  <footer>Pinecrest Tiny Homes & Coastal Cottages is a fictional company for demonstration · (555) 010-0100<br>Built by TaskRocket Business Automations</footer>
+  <footer>Pinecrest Tiny Homes is a fictional company for demonstration · (555) 010-0100<br>Built by TaskRocket Business Automations</footer>
 </main>
 
 <div class="sheet" id="shApply" role="dialog" aria-modal="true" aria-labelledby="aH">
@@ -219,10 +219,10 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
 
 <div class="sheet" id="shDel" role="dialog" aria-modal="true" aria-labelledby="dH">
   <form id="fDel" novalidate>
-    <h3 id="dH">Schedule your site visit</h3>
-    <p class="sub">We'll look at your site and plan delivery and setup. We'll text the day before.</p>
-    <label class="chk"><input type="checkbox"> I have land or a lot for the home, or I am looking for one</label>
-    <label class="chk"><input type="checkbox"> I've checked zoning, flood zone and rental rules with the county, town or HOA</label>
+    <h3 id="dH">Schedule your delivery visit</h3>
+    <p class="sub">We'll plan delivery and setup with you. We'll text the day before.</p>
+    <label class="chk"><input type="checkbox"> I have a way to tow or move the home, or will arrange delivery</label>
+    <label class="chk"><input type="checkbox"> I'll confirm with the county, town or park where it can be parked</label>
     <label class="chk"><input type="checkbox"> I understand delivery, setup and hookups are quoted separately</label>
     <div class="row">
       <div><label for="dDate">Day</label><input id="dDate" type="date"></div>
@@ -251,11 +251,11 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
   var AGENT_ID = 'agent_9801m6pfbkmte35997m35nrq2sjm';
   var UNITS = {
     'TH-101': {id:'TH-101', name:"8.5x24 Tiny Home on Wheels", short:"8.5\u00d724 Tiny Home", size:"8.5 by 24 feet", dim:"8.5'\u00d724'", kind:'x', cash:69500, mo:625, due:0, photo:'https://cdn.klaviyomail.com/company/XeViA5/images/9ede7df1-b33c-4b49-8509-a7033554aca8.png',
-      feats:["Sleeps 3 with a sleeping loft", "Cedar siding, black metal roof", "Full kitchenette, small porch", "Great backyard guest house"]},
-    'TH-215': {id:'TH-215', name:"12x36 Coastal Cottage", short:"12\u00d736 Coastal Cottage", size:"12 by 36 feet", dim:"12'\u00d736'", kind:'x', cash:84900, mo:764, due:0, photo:'https://cdn.klaviyomail.com/company/XeViA5/images/3fdb3a35-24b3-472f-843a-41dd6ecf6ac4.png',
-      feats:["Sleeps 5 with a loft", "Blue board-and-batten siding", "Covered front porch", "Built to set on piers or pilings"]},
-    'TH-240': {id:'TH-240', name:"16x40 Beach Bungalow", short:"16\u00d740 Beach Bungalow", size:"16 by 40 feet", dim:"16'\u00d740'", kind:'x', cash:109500, mo:985, due:0, photo:'https://cdn.klaviyomail.com/company/XeViA5/images/f447d6af-4429-4131-a186-7b5e05e63539.png',
-      feats:["2 bed 1 bath, sleeps 6", "Wraparound deck, dormer windows", "Full-size kitchen", "Best for families and rentals"]}
+      feats:["Sleeps 3 with a sleeping loft", "Cedar siding, black metal roof", "Full kitchenette, small porch", "A great first tiny home"]},
+    'TH-120': {id:'TH-120', name:"8.5x20 Cottage Tiny Home", short:"8.5\u00d720 Cottage", size:"8.5 by 20 feet", dim:"8.5'\u00d720'", kind:'x', cash:58900, mo:530, due:0, photo:'https://cdn.klaviyomail.com/company/XeViA5/images/cacee8de-48ee-4f2e-bc8a-13d67802a534.png',
+      feats:["Sleeps 2 with a sleeping loft", "White board-and-batten siding, green metal roof", "Compact kitchen", "The value pick"]},
+    'TH-130': {id:'TH-130', name:"8.5x30 Gooseneck Tiny Home", short:"8.5\u00d730 Gooseneck", size:"8.5 by 30 feet", dim:"8.5'\u00d730'", kind:'x', cash:94500, mo:850, due:0, photo:'https://cdn.klaviyomail.com/company/XeViA5/images/5a94204f-7c9e-46e2-af81-be409f52e335.png',
+      feats:["Sleeps 4 with two lofts", "Dark siding, cedar accents, big windows", "Full-size kitchen", "Best for a couple or small family"]}
   };
   function $(id){ return document.getElementById(id); }
   function money(n){ return '$' + n.toLocaleString('en-US'); }
@@ -379,7 +379,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
           open_payment: function(){ return 'There is no deposit or payment step in this demo. Move on: if the agreement is signed use open_delivery, otherwise use open_application or open_agreement.'; },
           show_unit: function(p){
             var id = String((p && p.unit_id) || '').toUpperCase(), u = UNITS[id];
-            if (!u) return 'No such home. Valid ids are TH-101, TH-215 and TH-240.';
+            if (!u) return 'No such home. Valid ids are TH-101, TH-120 and TH-130.';
             if (step > 0) return 'The application is already started, so the home is locked in.';
             unit = u; renderUnit();
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -433,7 +433,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
       ['Payment', money(unit.mo) + ' / month (sample)'],
       ['Term', '36 months rent-to-own (sample)'],
       ['Down payment', 'None. No deposit in this demo'],
-      ['Delivery and setup', 'Quoted after site visit']
+      ['Delivery and setup', 'Quoted after delivery visit']
     ].map(function(r){ return '<div><span>' + r[0] + '</span><b>' + r[1] + '</b></div>'; }).join('');
     open('shSign');
   }
@@ -459,9 +459,9 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
       order.no = 'DEMO-' + String(Math.floor(1000 + Math.random() * 9000));
       step = 3; paintSteps(); close('shDel');
       $('ordNo').textContent = order.no;
-      $('oSum').textContent = unit.name + ' · site visit ' + day + ', ' + win + '.';
+      $('oSum').textContent = unit.name + ' · delivery visit ' + day + ', ' + win + '.';
       open('shDone');
-      tell('The site visit is scheduled for ' + day + ', ' + win + '. The demo order number is ' + order.no + '. Celebrate, read the order number slowly, remind them this was a demo and nothing was charged, then ask if they have questions.');
+      tell('The delivery visit is scheduled for ' + day + ', ' + win + '. The demo order number is ' + order.no + '. Celebrate, read the order number slowly, remind them this was a demo and nothing was charged, then ask if they have questions.');
     });
   });
   $('oClose').addEventListener('click', function(){ close('shDone'); });
