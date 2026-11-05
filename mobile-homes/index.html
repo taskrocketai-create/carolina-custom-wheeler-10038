@@ -100,6 +100,16 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
 .done-box{text-align:center}
 .done-box .big{font:800 30px/1.1 Archivo,sans-serif;margin:8px 0}
 .ordno{display:inline-block;font:800 24px/1 Archivo,sans-serif;letter-spacing:.06em;border:2px dashed var(--accent);color:var(--accent);padding:12px 16px;border-radius:10px;margin:10px 0}
+
+#alerts{position:fixed;top:10px;left:0;right:0;z-index:99999;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;padding:0 12px}
+.alert{pointer-events:auto;width:min(94vw,420px);background:#fff;color:#08172C;border-radius:16px;box-shadow:0 10px 30px rgba(8,23,44,.28);border-left:6px solid #E37321;padding:12px 14px;font:14px/1.35 Archivo,system-ui,sans-serif;transform:translateY(-140%);opacity:0;transition:transform .45s cubic-bezier(.2,.9,.3,1.1),opacity .3s}
+.alert.in{transform:none;opacity:1}
+.alert .ah{display:flex;justify-content:space-between;gap:8px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#6b7686;margin-bottom:4px}
+.alert .ah b{color:#E37321}
+.alert .at{font-weight:800;font-size:15px;margin-bottom:2px}
+.alert .ab{color:#33415a}
+.alert .ax{position:absolute;right:10px;top:6px;border:0;background:none;color:#8a94a6;font-size:18px;cursor:pointer;line-height:1}
+.alert{position:relative}
 </style>
 </head>
 <body>
@@ -318,6 +328,24 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
     btn.textContent = '🎙 Tap to talk to Ashley'; setStatus(msg || ''); setChips(false);
   }
   function tell(t){ try { if (convo && convo.sendContextualUpdate) convo.sendContextualUpdate(t); } catch(e){} }
+  // ---- mock dealer alerts (demo only) ----
+  function ensureAlerts(){ var a = document.getElementById('alerts'); if (!a){ a = document.createElement('div'); a.id = 'alerts'; a.setAttribute('aria-live','polite'); document.body.appendChild(a); } return a; }
+  function notify(kind, title, body){
+    var el = document.createElement('div'); el.className = 'alert';
+    el.innerHTML = '<button class="ax" aria-label="Dismiss" type="button">×</button><div class="ah"><b>' + kind + '</b><span>Demo · emailed to the dealer</span></div><div class="at"></div><div class="ab"></div>';
+    el.querySelector('.at').textContent = title; el.querySelector('.ab').textContent = body;
+    ensureAlerts().appendChild(el);
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ el.classList.add('in'); }); });
+    var gone = function(){ el.classList.remove('in'); setTimeout(function(){ el.remove(); }, 500); };
+    el.querySelector('.ax').addEventListener('click', gone); setTimeout(gone, 9000);
+  }
+  function deviceName(){ var u = navigator.userAgent || ''; return /iPhone/.test(u) ? 'iPhone' : /iPad/.test(u) ? 'iPad' : /Android/.test(u) ? 'Android phone' : 'computer'; }
+  function nowStr(){ return new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }); }
+  function scanAlert(){ notify('QR scanned', 'Someone scanned ' + unit.id + ' (' + unit.name + ')', nowStr() + ' · on a ' + deviceName() + '. Ashley is greeting them now.'); }
+  function leadAlert(p){
+    var nm = (p && p.name) || 'A visitor', ph = (p && p.phone) || 'no number given', why = (p && p.interest) || '';
+    notify('New lead', nm + ' · ' + ph, unit.id + ' ' + unit.name + (why ? ' · ' + why : '') + ' · ' + nowStr());
+  }
 
   async function start(fromTap){
     if (convo || starting) return;
@@ -345,6 +373,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
         onDisconnect: function(){ idle('Conversation ended. Tap to talk again anytime.'); },
         onError: function(e){ console.error(e); },
         clientTools: {
+          save_lead: function(p){ leadAlert(p); return 'Lead saved and the dealer team was alerted. Thank them and carry on.'; },
           open_application: function(p){ if (step > 0) return 'The application is already submitted and approved. Move on to the agreement.'; openApply(p && p.name, p && p.phone); return 'The application form is open on their screen. Wait for the page to tell you it was submitted.'; },
           open_agreement: function(){ if (step < 1) return 'Not yet. The application has to be submitted first. Use open_application.'; if (step > 1) return 'The agreement is already signed. Move on.'; openSign(); return 'The agreement is open on their screen. Wait for the page to tell you it was signed.'; },
           open_payment: function(){ return 'There is no deposit or payment step in this demo. Move on: if the agreement is signed use open_delivery, otherwise use open_application or open_agreement.'; },
@@ -437,7 +466,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
   });
   $('oClose').addEventListener('click', function(){ close('shDone'); });
 
-  renderUnit(); paintSteps();
+  renderUnit(); paintSteps(); setTimeout(scanAlert, 1800);
   var ua = navigator.userActivation;
   if (ua && ua.hasBeenActive) { start(false); setTimeout(function(){ if (!convo) idle('Tap the button to start talking with Ashley.'); }, 6000); }
   else setStatus('Pick a home above, then tap the button and Ashley will take it from there.');
