@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Pinecrest Homes · Talk to Ashley (Demo)</title>
-<meta name="description" content="Demo: scan a QR code on a mobile home, talk to Ashley, get pre-approved, sign, put down a hold deposit and schedule a site visit. Fictional dealer, nothing is real.">
+<meta name="description" content="Demo: scan a QR code on a mobile home, talk to Ashley, submit a credit application, sign and schedule a site visit. Fictional dealer, nothing is real.">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -120,12 +120,11 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
       <div><span class="plabel">Sample payment</span><span class="pval sm" id="uMo"></span></div>
     </div>
     <p class="pnote">Sample pricing and financing for demo. 10% down, subject to approval. Price is for the home only.</p>
-    <p class="fin"><b>Due today</b> · <span id="uDue"></span> (refundable hold deposit)</p>
   </section>
 
   <section class="pad talk" aria-labelledby="talkH">
     <h2 id="talkH">Talk with Ashley</h2>
-    <p>Ashley is our virtual sales gal. Ask her anything, then let her walk you through pre-approval, signing, a hold deposit and booking a site visit, all on this page.</p>
+    <p>Ashley is our virtual sales gal. Ask her anything, then let her walk you through a credit application, signing and booking a site visit, all on this page.</p>
     <button id="tapBtn" type="button">🎙 Tap to talk to Ashley</button>
     <div id="status" aria-live="polite"></div>
   </section>
@@ -133,10 +132,9 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
   <section class="pad">
     <h2>Your purchase, step by step</h2>
     <ol class="steps">
-      <li><button class="step" id="s1" type="button"><span class="num">1</span><span><b>Apply</b><br><span class="s">Financing pre-approval</span></span><span class="arrow">›</span></button></li>
+      <li><button class="step" id="s1" type="button"><span class="num">1</span><span><b>Credit application</b><br><span class="s">Quick soft check, no impact to your score</span></span><span class="arrow">›</span></button></li>
       <li><button class="step" id="s2" type="button" disabled><span class="num">2</span><span><b>Sign</b><br><span class="s">Review and sign the purchase agreement</span></span><span class="arrow">›</span></button></li>
-      <li><button class="step" id="s3" type="button" disabled><span class="num">3</span><span><b>Hold deposit</b><br><span class="s">Test mode, no real card</span></span><span class="arrow">›</span></button></li>
-      <li><button class="step" id="s4" type="button" disabled><span class="num">4</span><span><b>Schedule site visit</b><br><span class="s">Pick a day and time</span></span><span class="arrow">›</span></button></li>
+      <li><button class="step" id="s3" type="button" disabled><span class="num">3</span><span><b>Schedule site visit</b><br><span class="s">Pick a day and time</span></span><span class="arrow">›</span></button></li>
     </ol>
   </section>
 
@@ -155,7 +153,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
   </section>
 
   <section class="pad" aria-label="Built for your lot">
-    <p class="fin"><b>Built for your lot.</b> This is a demo. Your version uses your units, prices, financing and deposit terms, delivery or visit rules, and Ashley's name and voice. Tell Alan at TaskRocket what you'd change.</p>
+    <p class="fin"><b>Built for your lot.</b> This is a demo. Your version uses your units, prices, financing and credit-application rules, delivery or visit rules, and Ashley's name and voice. Tell Alan at TaskRocket what you'd change.</p>
   </section>
 
   <footer>Pinecrest Homes is a fictional company for demonstration · (555) 010-0100<br>Built by TaskRocket Business Automations</footer>
@@ -163,8 +161,8 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
 
 <div class="sheet" id="shApply" role="dialog" aria-modal="true" aria-labelledby="aH">
   <form id="fApply">
-    <h3 id="aH">Financing pre-approval</h3>
-    <p class="sub">Demo form. Use made-up info. Nothing is saved or sent anywhere.</p>
+    <h3 id="aH">Credit application</h3>
+    <p class="sub">Demo form. Use made-up info. Nothing is saved, sent or pulled. A real build connects to your lender or credit partner.</p>
     <label for="aName">Full name</label><input id="aName" required autocomplete="name">
     <div class="row">
       <div><label for="aPhone">Mobile</label><input id="aPhone" type="tel" inputmode="tel" required autocomplete="tel"></div>
@@ -176,6 +174,19 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
       <div><label for="aInc">Monthly income</label>
         <select id="aInc"><option>Under $2,000</option><option selected>$2,000 – $3,500</option><option>$3,500 – $5,500</option><option>Over $5,500</option></select></div>
     </div>
+    <div class="row">
+      <div><label for="aYrs">Years at employer</label>
+        <select id="aYrs"><option>Under 1</option><option selected>1 – 3</option><option>3 – 5</option><option>5+</option></select></div>
+      <div><label for="aHome">Current housing</label>
+        <select id="aHome"><option>Rent</option><option>Own</option><option>Live with family</option><option>Other</option></select></div>
+    </div>
+    <div class="row">
+      <div><label for="aDown">Planned down payment</label>
+        <select id="aDown"><option>About 10%</option><option>10 – 20%</option><option>20%+</option><option>Not sure yet</option></select></div>
+      <div><label for="aCo">Co-applicant?</label>
+        <select id="aCo"><option>No</option><option>Yes, spouse or partner</option><option>Yes, someone else</option></select></div>
+    </div>
+    <label class="chk"><input type="checkbox" id="aSoft" required> I authorize a soft credit check (demo, nothing is pulled)</label>
     <label class="chk"><input type="checkbox" id="aOwn" required> I own the land or have the owner's OK (or I'm still looking)</label>
     <button class="go" type="submit" id="aGo">Submit application</button>
     <button class="cancel" type="button" data-close="shApply">Not now</button>
@@ -195,20 +206,6 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
   </form>
 </div>
 
-<div class="sheet" id="shPay" role="dialog" aria-modal="true" aria-labelledby="pH">
-  <form id="fPay">
-    <span class="test">Test mode · no real charge</span>
-    <h3 id="pH">Pay your deposit</h3>
-    <p class="sub" id="pSub"></p>
-    <label for="pCard">Card number</label><input id="pCard" value="4242 4242 4242 4242" inputmode="numeric" autocomplete="off" required>
-    <div class="row">
-      <div><label for="pExp">Expires</label><input id="pExp" value="12 / 30" required></div>
-      <div><label for="pCvc">CVC</label><input id="pCvc" value="123" required></div>
-    </div>
-    <button class="go" type="submit" id="pGo">Pay</button>
-    <button class="cancel" type="button" data-close="shPay">Not now</button>
-  </form>
-</div>
 
 <div class="sheet" id="shDel" role="dialog" aria-modal="true" aria-labelledby="dH">
   <form id="fDel">
@@ -233,7 +230,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
     <div class="big" id="oH">You're all set!</div>
     <div class="ordno" id="ordNo">DEMO-0000</div>
     <p id="oSum" style="color:var(--muted);margin:6px 0 0"></p>
-    <p style="margin:16px 0 0"><b>This is where the demo ends.</b> Nothing was charged, saved or scheduled. In a real build, the dealer's team gets this lead and deposit the moment it's placed.</p>
+    <p style="margin:16px 0 0"><b>This is where the demo ends.</b> Nothing was charged, saved or scheduled. In a real build, the dealer's team gets this lead and credit application the moment it's placed.</p>
     <button class="go" type="button" id="oClose" style="width:100%;margin-top:18px;border:0;border-radius:12px;padding:16px;background:var(--accent);color:var(--accent-ink);font:700 17px/1 Archivo,sans-serif;cursor:pointer">Close</button>
   </div>
 </div>
@@ -289,10 +286,8 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
     $('uSpec').textContent = unit.dim + ' · ' + unit.feats[0];
     $('uCash').textContent = money(unit.cash);
     $('uMo').textContent = money(unit.mo) + '/mo';
-    $('uDue').textContent = money(unit.due);
     $('uFeat').innerHTML = unit.feats.map(function(f){ return '<li>' + f + '</li>'; }).join('');
     $('badge').textContent = 'On the lot';
-    $('pSub').textContent = money(unit.due) + ' today: a refundable hold deposit that takes it off the lot while the paperwork is finished.';
     var c = $('chips'); c.innerHTML = '';
     Object.keys(UNITS).forEach(function(k){
       var b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = UNITS[k].short;
@@ -306,7 +301,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
   var step = 0, order = {};
   function resetOrder(){ step = 0; order = {}; paintSteps(); }
   function paintSteps(){
-    for (var i = 1; i <= 4; i++){
+    for (var i = 1; i <= 3; i++){
       var b = $('s' + i);
       b.classList.toggle('done', step >= i);
       b.disabled = (step !== i - 1);
@@ -336,7 +331,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
         connectionType: 'websocket',
         dynamicVariables: {
           unit_id: unit.id, unit_name: unit.name, unit_size: unit.size,
-          cash_price: money(unit.cash), monthly: money(unit.mo), deposit_due: money(unit.due),
+          cash_price: money(unit.cash), monthly: money(unit.mo), deposit_due: 'none, no deposit is collected',
           unit_features: unit.feats.join(', ')
         },
         onConnect: function(){
@@ -352,16 +347,16 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
         clientTools: {
           open_application: function(p){ if (step > 0) return 'The application is already submitted and approved. Move on to the agreement.'; openApply(p && p.name, p && p.phone); return 'The application form is open on their screen. Wait for the page to tell you it was submitted.'; },
           open_agreement: function(){ if (step < 1) return 'Not yet. The application has to be submitted first. Use open_application.'; if (step > 1) return 'The agreement is already signed. Move on.'; openSign(); return 'The agreement is open on their screen. Wait for the page to tell you it was signed.'; },
-          open_payment: function(){ if (step < 2) return 'Not yet. The agreement has to be signed first. Use open_agreement.'; if (step > 2) return 'The deposit is already paid. Move on.'; openPay(); return 'The payment form is open in test mode. Tell them to tap Pay.'; },
+          open_payment: function(){ return 'There is no deposit or payment step in this demo. Move on: if the agreement is signed use open_delivery, otherwise use open_application or open_agreement.'; },
           show_unit: function(p){
             var id = String((p && p.unit_id) || '').toUpperCase(), u = UNITS[id];
             if (!u) return 'No such home. Valid ids are M-301, M-312 and M-327.';
             if (step > 0) return 'The application is already started, so the home is locked in.';
             unit = u; renderUnit();
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            return 'The screen now shows ' + u.name + ' (' + u.id + '): ' + u.size + ', cash ' + money(u.cash) + ', sample payment ' + money(u.mo) + ' a month (240 months, 8.5% APR, 10% down), ' + money(u.due) + ' due today. Features: ' + u.feats.join(', ') + '. Use these details from now on.';
+            return 'The screen now shows ' + u.name + ' (' + u.id + '): ' + u.size + ', cash ' + money(u.cash) + ', sample payment ' + money(u.mo) + ' a month (240 months, 8.5% APR, 10% down), no deposit required. Features: ' + u.feats.join(', ') + '. Use these details from now on.';
           },
-          open_delivery: function(){ if (step < 3) return 'Not yet. The deposit has to be paid first. Use open_payment.'; if (step > 3) return 'Delivery is already scheduled.'; openDel(); return 'The delivery scheduler is open on their screen.'; }
+          open_delivery: function(){ if (step < 2) return 'Not yet. The agreement has to be signed first. Use open_agreement.'; if (step > 2) return 'Delivery is already scheduled.'; openDel(); return 'The delivery scheduler is open on their screen.'; }
         }
       });
     } catch (e) {
@@ -380,11 +375,10 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
   function close(id){ $(id).classList.remove('open'); }
   var closers = document.querySelectorAll('[data-close]');
   for (var i = 0; i < closers.length; i++) closers[i].addEventListener('click', function(e){ close(e.currentTarget.getAttribute('data-close')); });
-  ['shApply','shSign','shPay','shDel'].forEach(function(id){ $(id).addEventListener('click', function(e){ if (e.target === $(id)) close(id); }); });
+  ['shApply','shSign','shDel'].forEach(function(id){ $(id).addEventListener('click', function(e){ if (e.target === $(id)) close(id); }); });
   $('s1').addEventListener('click', function(){ openApply(); });
   $('s2').addEventListener('click', openSign);
-  $('s3').addEventListener('click', openPay);
-  $('s4').addEventListener('click', openDel);
+  $('s3').addEventListener('click', openDel);
 
   function busy(btnEl, label, after){
     btnEl.disabled = true; var old = btnEl.textContent; btnEl.textContent = label;
@@ -399,7 +393,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
     busy($('aGo'), 'Checking…', function(){
       order.name = $('aName').value.trim(); order.addr = $('aAddr').value.trim();
       step = 1; paintSteps(); close('shApply');
-      tell('The pre-approval was submitted by ' + order.name + ' and is APPROVED instantly (demo). Congratulate them and open the agreement with open_agreement.');
+      tell('The credit application was submitted by ' + order.name + ' and is APPROVED instantly (demo). Congratulate them, say no deposit is needed, and open the agreement with open_agreement.');
     });
   });
 
@@ -410,7 +404,6 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
       ['Payment', money(unit.mo) + ' / month (sample)'],
       ['Term', '240 months at 8.5% APR (sample)'],
       ['Down payment', '10%, finalized at closing'],
-      ['Due today', money(unit.due) + ' (refundable hold deposit)'],
       ['Setup, land, permits', 'Quoted after site visit']
     ].map(function(r){ return '<div><span>' + r[0] + '</span><b>' + r[1] + '</b></div>'; }).join('');
     open('shSign');
@@ -419,16 +412,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
     e.preventDefault();
     busy($('gGo'), 'Signing…', function(){
       step = 2; paintSteps(); close('shSign');
-      tell('The agreement was just signed electronically by ' + $('gSig').value.trim() + '. Next, open the deposit payment with open_payment and tell them it is test mode, just tap Pay.');
-    });
-  });
-
-  function openPay(){ open('shPay'); $('pGo').textContent = 'Pay ' + money(unit.due); }
-  $('fPay').addEventListener('submit', function(e){
-    e.preventDefault();
-    busy($('pGo'), 'Processing…', function(){
-      step = 3; paintSteps(); close('shPay');
-      tell('The test deposit of ' + money(unit.due) + ' went through. Next, open the site visit scheduler with open_delivery.');
+      tell('The agreement was just signed electronically by ' + $('gSig').value.trim() + '. Next, open the scheduler with open_delivery.');
     });
   });
 
@@ -444,7 +428,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
       var day = new Date($('dDate').value + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
       var win = $('dWin').value;
       order.no = 'DEMO-' + String(Math.floor(1000 + Math.random() * 9000));
-      step = 4; paintSteps(); close('shDel');
+      step = 3; paintSteps(); close('shDel');
       $('ordNo').textContent = order.no;
       $('oSum').textContent = unit.name + ' · site visit ' + day + ', ' + win + '.';
       open('shDone');
