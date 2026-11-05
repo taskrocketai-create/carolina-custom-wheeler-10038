@@ -255,13 +255,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
     'P-415': {id:'P-415', name:'10x40 Lodge with Porch', short:'10×40 Lodge', size:'10 by 40 feet', dim:"10'×40'", kind:'lodge', cash:74500, mo:670, due:1000, photo:'https://cdn.klaviyomail.com/company/XeViA5/images/110c09a8-73bf-45f7-bb5a-7713e364f5a3.png',
       feats:['1 bedroom, 1 bath, sleeps 5','Long covered porch','Open kitchen and living room','Vaulted ceiling','Metal roof and fiber cement siding']},
     'P-422': {id:'P-422', name:'14x28 Loft Cottage', short:'14×28 Loft', size:'14 by 28 feet', dim:"14'×28'", kind:'loft', cash:84900, mo:764, due:1000, photo:'https://cdn.klaviyomail.com/company/XeViA5/images/76838ce1-ca66-456d-90f5-72f101682411.png',
-      feats:['2 sleeping areas plus a large loft, sleeps 6','Front porch and dormer window','Full-size kitchen with pantry','Quartz countertops','Best fit for families and rentals']},
-    'P-430': {id:'P-430', name:'8.5x24 Tiny Park Model on Wheels', short:'8.5×24 Tiny', size:'8.5 by 24 feet', dim:"8.5'×24'", kind:'cabin', cash:69500, mo:625, due:1000, photo:'https://cdn.klaviyomail.com/company/XeViA5/images/9ede7df1-b33c-4b49-8509-a7033554aca8.png',
-      feats:['1 bedroom, 1 bath, sleeps 3','Sleeping loft','Cedar siding, black metal roof','Full kitchenette, small porch','A great first tiny home']},
-    'P-440': {id:'P-440', name:'12x36 Coastal Cottage', short:'12×36 Coastal', size:'12 by 36 feet', dim:"12'×36'", kind:'cabin', cash:84900, mo:764, due:1000, photo:'https://cdn.klaviyomail.com/company/XeViA5/images/3fdb3a35-24b3-472f-843a-41dd6ecf6ac4.png',
-      feats:['1 bedroom, 1 bath plus loft, sleeps 5','Blue board-and-batten siding','Covered front porch','Made for a beach getaway or vacation rental']},
-    'P-450': {id:'P-450', name:'16x40 Beach Bungalow', short:'16×40 Bungalow', size:'16 by 40 feet', dim:"16'×40'", kind:'lodge', cash:109500, mo:985, due:1000, photo:'https://cdn.klaviyomail.com/company/XeViA5/images/f447d6af-4429-4131-a186-7b5e05e63539.png',
-      feats:['2 bedrooms, 1 bath, sleeps 6','Wraparound deck and dormer windows','Full-size kitchen','Best for families and short-term rentals']}
+      feats:['2 sleeping areas plus a large loft, sleeps 6','Front porch and dormer window','Full-size kitchen with pantry','Quartz countertops','Best fit for families and rentals']}
   };
   function $(id){ return document.getElementById(id); }
   function money(n){ return '$' + n.toLocaleString('en-US'); }
@@ -385,7 +379,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
           open_payment: function(){ return 'There is no deposit or payment step in this demo. Move on: if the agreement is signed use open_delivery, otherwise use open_application or open_agreement.'; },
           show_unit: function(p){
             var id = String((p && p.unit_id) || '').toUpperCase(), u = UNITS[id];
-            if (!u) return 'No such park model. Valid ids are P-401, P-415, P-422, P-430, P-440 and P-450.';
+            if (!u) return 'No such park model. Valid ids are P-401, P-415 and P-422.';
             if (step > 0) return 'The application is already started, so the park model is locked in.';
             unit = u; renderUnit();
             window.scrollTo({ top: 0, behavior: 'smooth' });
