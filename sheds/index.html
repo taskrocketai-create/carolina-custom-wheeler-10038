@@ -161,48 +161,48 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
 </main>
 
 <div class="sheet" id="shApply" role="dialog" aria-modal="true" aria-labelledby="aH">
-  <form id="fApply">
+  <form id="fApply" novalidate>
     <h3 id="aH">Rent-to-own application</h3>
     <p class="sub">Demo form. Use made-up info. Nothing is saved or sent anywhere.</p>
-    <label for="aName">Full name</label><input id="aName" required autocomplete="name">
+    <label for="aName">Full name</label><input id="aName" autocomplete="name">
     <div class="row">
-      <div><label for="aPhone">Mobile</label><input id="aPhone" type="tel" inputmode="tel" required autocomplete="tel"></div>
-      <div><label for="aEmail">Email</label><input id="aEmail" type="email" required autocomplete="email"></div>
+      <div><label for="aPhone">Mobile</label><input id="aPhone" type="tel" inputmode="tel" autocomplete="tel"></div>
+      <div><label for="aEmail">Email</label><input id="aEmail" type="email" autocomplete="email"></div>
     </div>
-    <label for="aAddr">Delivery address</label><input id="aAddr" required autocomplete="street-address" placeholder="123 Country Rd, Wilson NC">
+    <label for="aAddr">Delivery address</label><input id="aAddr" autocomplete="street-address" placeholder="123 Country Rd, Wilson NC">
     <div class="row">
-      <div><label for="aEmp">Employer</label><input id="aEmp" required></div>
+      <div><label for="aEmp">Employer</label><input id="aEmp"></div>
       <div><label for="aInc">Monthly income</label>
         <select id="aInc"><option>Under $2,000</option><option selected>$2,000 – $3,500</option><option>$3,500 – $5,500</option><option>Over $5,500</option></select></div>
     </div>
-    <label class="chk"><input type="checkbox" id="aOwn" required> I own the property or have the owner's OK</label>
+    <label class="chk"><input type="checkbox" id="aOwn"> I own the property or have the owner's OK</label>
     <button class="go" type="submit" id="aGo">Submit application</button>
     <button class="cancel" type="button" data-close="shApply">Not now</button>
   </form>
 </div>
 
 <div class="sheet" id="shSign" role="dialog" aria-modal="true" aria-labelledby="gH">
-  <form id="fSign">
+  <form id="fSign" novalidate>
     <h3 id="gH">Rent-to-own agreement</h3>
     <p class="sub">Key terms in plain English. Sample only.</p>
     <div class="terms" id="terms"></div>
     <label for="gSig">Type your full name to sign</label>
-    <input id="gSig" required autocomplete="off" placeholder="Your full name">
-    <label class="chk"><input type="checkbox" id="gOk" required> I've read the terms and agree to sign electronically</label>
+    <input id="gSig" autocomplete="off" placeholder="Your full name">
+    <label class="chk"><input type="checkbox" id="gOk"> I've read the terms and agree to sign electronically</label>
     <button class="go" type="submit" id="gGo">Sign agreement</button>
     <button class="cancel" type="button" data-close="shSign">Not now</button>
   </form>
 </div>
 
 <div class="sheet" id="shPay" role="dialog" aria-modal="true" aria-labelledby="pH">
-  <form id="fPay">
+  <form id="fPay" novalidate>
     <span class="test">Test mode · no real charge</span>
     <h3 id="pH">Pay your deposit</h3>
     <p class="sub" id="pSub"></p>
-    <label for="pCard">Card number</label><input id="pCard" value="4242 4242 4242 4242" inputmode="numeric" autocomplete="off" required>
+    <label for="pCard">Card number</label><input id="pCard" value="4242 4242 4242 4242" inputmode="numeric" autocomplete="off">
     <div class="row">
-      <div><label for="pExp">Expires</label><input id="pExp" value="12 / 30" required></div>
-      <div><label for="pCvc">CVC</label><input id="pCvc" value="123" required></div>
+      <div><label for="pExp">Expires</label><input id="pExp" value="12 / 30"></div>
+      <div><label for="pCvc">CVC</label><input id="pCvc" value="123"></div>
     </div>
     <button class="go" type="submit" id="pGo">Pay</button>
     <button class="cancel" type="button" data-close="shPay">Not now</button>
@@ -210,14 +210,14 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
 </div>
 
 <div class="sheet" id="shDel" role="dialog" aria-modal="true" aria-labelledby="dH">
-  <form id="fDel">
+  <form id="fDel" novalidate>
     <h3 id="dH">Schedule delivery</h3>
     <p class="sub">Free delivery and setup within 50 miles. We'll text the day before.</p>
-    <label class="chk"><input type="checkbox" required> The site is reasonably level</label>
-    <label class="chk"><input type="checkbox" required> There's a clear path at least 14 feet wide</label>
-    <label class="chk"><input type="checkbox" required> I've checked county permit and setback rules</label>
+    <label class="chk"><input type="checkbox"> The site is reasonably level</label>
+    <label class="chk"><input type="checkbox"> There's a clear path at least 14 feet wide</label>
+    <label class="chk"><input type="checkbox"> I've checked county permit and setback rules</label>
     <div class="row">
-      <div><label for="dDate">Day</label><input id="dDate" type="date" required></div>
+      <div><label for="dDate">Day</label><input id="dDate" type="date"></div>
       <div><label for="dWin">Arrival window</label>
         <select id="dWin"><option>8 – 11 AM</option><option>11 AM – 2 PM</option><option>2 – 5 PM</option></select></div>
     </div>
@@ -409,7 +409,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
     busy($('aGo'), 'Checking…', function(){
       order.name = $('aName').value.trim(); order.addr = $('aAddr').value.trim();
       step = 1; paintSteps(); close('shApply');
-      tell('The application was submitted by ' + order.name + ' and is APPROVED instantly (no credit check). Congratulate them and open the agreement with open_agreement.');
+      tell('The application was submitted by ' + (order.name || 'the customer') + ' and is APPROVED instantly (no credit check). Congratulate them and open the agreement with open_agreement.');
     });
   });
 
@@ -429,7 +429,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
     e.preventDefault();
     busy($('gGo'), 'Signing…', function(){
       step = 2; paintSteps(); close('shSign');
-      tell('The agreement was just signed electronically by ' + $('gSig').value.trim() + '. Next, open the deposit payment with open_payment and tell them it is test mode, just tap Pay.');
+      tell('The agreement was just signed electronically by ' + ($('gSig').value.trim() || 'the customer') + '. Next, open the deposit payment with open_payment and tell them it is test mode, just tap Pay.');
     });
   });
 

@@ -160,17 +160,17 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
 </main>
 
 <div class="sheet" id="shApply" role="dialog" aria-modal="true" aria-labelledby="aH">
-  <form id="fApply">
+  <form id="fApply" novalidate>
     <h3 id="aH">Credit application</h3>
     <p class="sub">Demo form. Use made-up info. Nothing is saved, sent or pulled. A real build connects to your lender or credit partner.</p>
-    <label for="aName">Full name</label><input id="aName" required autocomplete="name">
+    <label for="aName">Full name</label><input id="aName" autocomplete="name">
     <div class="row">
-      <div><label for="aPhone">Mobile</label><input id="aPhone" type="tel" inputmode="tel" required autocomplete="tel"></div>
-      <div><label for="aEmail">Email</label><input id="aEmail" type="email" required autocomplete="email"></div>
+      <div><label for="aPhone">Mobile</label><input id="aPhone" type="tel" inputmode="tel" autocomplete="tel"></div>
+      <div><label for="aEmail">Email</label><input id="aEmail" type="email" autocomplete="email"></div>
     </div>
-    <label for="aAddr">Your address</label><input id="aAddr" required autocomplete="street-address" placeholder="123 Country Rd, Wilson NC">
+    <label for="aAddr">Your address</label><input id="aAddr" autocomplete="street-address" placeholder="123 Country Rd, Wilson NC">
     <div class="row">
-      <div><label for="aEmp">Employer</label><input id="aEmp" required></div>
+      <div><label for="aEmp">Employer</label><input id="aEmp"></div>
       <div><label for="aInc">Monthly income</label>
         <select id="aInc"><option>Under $2,000</option><option selected>$2,000 – $3,500</option><option>$3,500 – $5,500</option><option>Over $5,500</option></select></div>
     </div>
@@ -186,21 +186,21 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
       <div><label for="aCo">Co-applicant?</label>
         <select id="aCo"><option>No</option><option>Yes, spouse or partner</option><option>Yes, someone else</option></select></div>
     </div>
-    <label class="chk"><input type="checkbox" id="aSoft" required> I authorize a soft credit check (demo, nothing is pulled)</label>
-    <label class="chk"><input type="checkbox" id="aOwn" required> I own the land or have the owner's OK (or I'm still looking)</label>
+    <label class="chk"><input type="checkbox" id="aSoft"> I authorize a soft credit check (demo, nothing is pulled)</label>
+    <label class="chk"><input type="checkbox" id="aOwn"> I own the land or have the owner's OK (or I'm still looking)</label>
     <button class="go" type="submit" id="aGo">Submit application</button>
     <button class="cancel" type="button" data-close="shApply">Not now</button>
   </form>
 </div>
 
 <div class="sheet" id="shSign" role="dialog" aria-modal="true" aria-labelledby="gH">
-  <form id="fSign">
+  <form id="fSign" novalidate>
     <h3 id="gH">Purchase agreement</h3>
     <p class="sub">Key terms in plain English. Sample only.</p>
     <div class="terms" id="terms"></div>
     <label for="gSig">Type your full name to sign</label>
-    <input id="gSig" required autocomplete="off" placeholder="Your full name">
-    <label class="chk"><input type="checkbox" id="gOk" required> I've read the terms and agree to sign electronically</label>
+    <input id="gSig" autocomplete="off" placeholder="Your full name">
+    <label class="chk"><input type="checkbox" id="gOk"> I've read the terms and agree to sign electronically</label>
     <button class="go" type="submit" id="gGo">Sign agreement</button>
     <button class="cancel" type="button" data-close="shSign">Not now</button>
   </form>
@@ -208,14 +208,14 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
 
 
 <div class="sheet" id="shDel" role="dialog" aria-modal="true" aria-labelledby="dH">
-  <form id="fDel">
+  <form id="fDel" novalidate>
     <h3 id="dH">Schedule a site visit</h3>
     <p class="sub">We'll walk the site with you and plan delivery and setup. We'll text the day before.</p>
-    <label class="chk"><input type="checkbox" required> I know roughly where the home would go</label>
-    <label class="chk"><input type="checkbox" required> I've asked about county permit and setback rules</label>
-    <label class="chk"><input type="checkbox" required> I understand setup is quoted after the visit</label>
+    <label class="chk"><input type="checkbox"> I know roughly where the home would go</label>
+    <label class="chk"><input type="checkbox"> I've asked about county permit and setback rules</label>
+    <label class="chk"><input type="checkbox"> I understand setup is quoted after the visit</label>
     <div class="row">
-      <div><label for="dDate">Day</label><input id="dDate" type="date" required></div>
+      <div><label for="dDate">Day</label><input id="dDate" type="date"></div>
       <div><label for="dWin">Time window</label>
         <select id="dWin"><option>8 – 11 AM</option><option>11 AM – 2 PM</option><option>2 – 5 PM</option></select></div>
     </div>
@@ -393,7 +393,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
     busy($('aGo'), 'Checking…', function(){
       order.name = $('aName').value.trim(); order.addr = $('aAddr').value.trim();
       step = 1; paintSteps(); close('shApply');
-      tell('The credit application was submitted by ' + order.name + ' and is APPROVED instantly (demo). Congratulate them, say no deposit is needed, and open the agreement with open_agreement.');
+      tell('The credit application was submitted by ' + (order.name || 'the customer') + ' and is APPROVED instantly (demo). Congratulate them, say no deposit is needed, and open the agreement with open_agreement.');
     });
   });
 
@@ -412,7 +412,7 @@ footer{padding:22px 18px 32px;text-align:center;font-size:13px;color:var(--muted
     e.preventDefault();
     busy($('gGo'), 'Signing…', function(){
       step = 2; paintSteps(); close('shSign');
-      tell('The agreement was just signed electronically by ' + $('gSig').value.trim() + '. Next, open the scheduler with open_delivery.');
+      tell('The agreement was just signed electronically by ' + ($('gSig').value.trim() || 'the customer') + '. Next, open the scheduler with open_delivery.');
     });
   });
 
